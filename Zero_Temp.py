@@ -1,7 +1,7 @@
 import numpy as np
 import scipy as sp
 import matplotlib.pyplot as plt
-
+import Particle_Class.SpinParticle
 
 #Size of 1D Lattice
 lattice_size=100
@@ -38,4 +38,3 @@ for i in np.arange(0,len(bonds_array),1):
 greatest_bond=[x,y,z]
 
 print(greatest_bond)
-
