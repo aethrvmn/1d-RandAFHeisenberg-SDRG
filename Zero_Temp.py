@@ -1,10 +1,10 @@
 import numpy as np
 import scipy as sp
 import matplotlib.pyplot as plt
-import Particle_Class.SpinParticle
+from Particle_Class import SpinParticle
 
 #Size of 1D Lattice
-lattice_size=100
+lattice_size=1000
 
 #Array of Spins
 spin_array=[0.5]
@@ -34,7 +34,9 @@ for i in np.arange(0,len(bonds_array),1):
         y = bonds_array[i]
         z = bonds_array[i+1]
         n = y
+    plt.scatter(i,m)
+    plt.pause(0.1)
 
 greatest_bond=[x,y,z]
-
+plt.show()
 print(greatest_bond)
