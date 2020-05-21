@@ -3,13 +3,13 @@ import scipy as sp
 import matplotlib.pyplot as plt
 
 
-#size of 1d lattice
+#Size of 1D Lattice
 lattice_size=100
 
-#array of spins
+#Array of Spins
 spin_array=[0.5]
 
-#array of bond strenght
+#Array of Bond Strenght
 bonds_array=[]
 
 #Creates the AF state
@@ -18,14 +18,14 @@ for i in np.arange(0,lattice_size,1):
         spin_array.append((-0.5))
     else:
         spin_array.append((0.5))
-
+#Creates Randomly 
 for i in np.arange(0,lattice_size,1):
-    J = np.random.uniform(0,10)
+    J = np.random.normal(0,5)
+    if J < 0:
+        J = -J
     bonds_array.append(J)
 
-
-
-#finds the greatest bond
+#Finds the Greatest Bond
 n=0
 for i in np.arange(0,len(bonds_array),1):
     m = bonds_array[i]
