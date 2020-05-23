@@ -1,8 +1,7 @@
 import numpy as np
 import scipy as sp
 import matplotlib.pyplot as plt
-from .Particle_Class import SpinParticle
-from .spin_chain import spin_chain
+from classes.spin_chain import spin_chain
 
 #Size of 1D Lattice
 lattice_size=1000
