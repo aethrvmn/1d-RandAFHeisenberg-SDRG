@@ -3,6 +3,7 @@ import numpy as np
 class spin_chain:
 
     '''
+    1.0:
      This class creates instances of a spin chain, with a specific energy. For now generates the ground state of said system.
     When an instance is  created, the energy of the system is calculated automatically using the calculate_energy method, which is
     the typical way of calculating the energy with the regular hamiltonian, without spin elimination sheananigans (need to fix that?).
@@ -16,8 +17,11 @@ class spin_chain:
     to do the spin elimination transform you, having initialized the class in an instance, namely idk bob = spin_chain(10, 1)
     you just do, bob.spin_elimination() and bob is updated !!! So you keep on doing that shit. Also every time you can access them
     K values, as: K_now = bob.K . Hopefully you get what i mean. Cheers!
+    2.0:
+     In this version i added the cases when K_max is located in the boundary. Not sure if correct but it works, and works in a manner
+    that was anticipated, similar with the regular one.
     '''
-    version = "1.0"
+    version = "2.0"
 
     def calculate_energy(self):
         #calculates energy of current state
@@ -51,9 +55,31 @@ class spin_chain:
         K_max, max_index = self.max_K()
         #i didn't know what happens if the transformation is on the boundaries :(
         if max_index == 0:
-            pass
+            K1 = 0
+            K2 = self.K[max_index + 1]
+
+            K_prime = K1*K2/(2*K_max)
+            #updates all parameters that change!
+            self.energy -= (K_max*(self.state[max_index]*self.state[max_index+1] + (3/4))) + (3*((K1**2)+(K2**2))/(16*K_max))
+
+            K_old[max_index] = K_prime
+            K_new = np.delete(K_old, [max_index, max_index+1])
+            self.length = K_new.shape[0] + 1
+            self.state = np.resize(np.array([0.5, -0.5]), self.length)
+            self.K = K_new
         elif max_index == K_old.shape[0] - 1:
-            pass
+            K1 = self.K[max_index - 1]
+            K2 = 0
+
+            K_prime = K1*K2/(2*K_max)
+            #updates all parameters that change!
+            self.energy -= (K_max*(self.state[max_index]*self.state[max_index-1] + (3/4))) + (3*((K1**2)+(K2**2))/(16*K_max))
+
+            K_old[max_index] = K_prime
+            K_new = np.delete(K_old, [max_index-1, max_index])
+            self.length = K_new.shape[0] + 1
+            self.state = np.resize(np.array([0.5, -0.5]), self.length)
+            self.K = K_new
         else:
             #the regular transformation
             K1 = self.K[max_index - 1]
