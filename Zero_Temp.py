@@ -2,6 +2,7 @@ import numpy as np
 import scipy as sp
 import matplotlib.pyplot as plt
 from Particle_Class import SpinParticle
+from spin_chain import spin_chain
 
 #Size of 1D Lattice
 lattice_size=1000
@@ -18,7 +19,7 @@ for i in np.arange(0,lattice_size,1):
         spin_array.append((-0.5))
     else:
         spin_array.append((0.5))
-#Creates Randomly 
+#Creates Randomly
 for i in np.arange(0,lattice_size,1):
     J = np.random.normal(0,5)
     if J < 0:
