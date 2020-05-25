@@ -5,6 +5,6 @@ from classes.spin_chain_tolis import spin_chain
 
 system = Chain(100,10)
 
-system.biggest_bond().sys_energy()
+system.strong_bond().sys_energy()
 
 print(system.mega_bond, system.mega_index, system.energy)

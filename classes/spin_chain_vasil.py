@@ -6,7 +6,7 @@ This is the code I have writen to define the Random Antiferromagnetic Heisenberg
 '''
 class Chain:
     
-    version='Alpha v0.1'
+    version='Alpha v0.7'
     
     #Initial call, starts the project by taking in the length and the maximum energy ceiling, and creating a random spin chain based on those.
     def __init__(self, length, ceiling):
@@ -28,7 +28,7 @@ class Chain:
     
     
     #This finds the strongest bond
-    def biggest_bond(self):
+    def strong_bond(self):
         self.mega_bond = np.amax(self.bonds)
         self.mega_index = np.argmax(self.bonds)
         return self
