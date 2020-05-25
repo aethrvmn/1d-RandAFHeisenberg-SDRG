@@ -34,6 +34,6 @@ class Chain:
         return self
     
     
-    #This is the RG process, does not account for the edge spins
+    #This is the RG process
     #def elimination_transformation(self):
         
