@@ -20,20 +20,20 @@ class Chain:
         #as of right now does not take into account the last spin as it IndexErrors
         for i in np.arange(self.length):
             try:
-                energy =+ self.bonds[i]*self.state[i]+self.state[i+1]
+                self.energy =+ self.bonds[i]*self.state[i]+self.state[i+1]
                 continue
             except IndexError:
                 break
-        return energy
+        return self
     
     
     #This finds the strongest bond
     def biggest_bond(self):
-        mega_bond = np.amax(self.bonds)
-        mega_index = np.argmax(self.bonds)
-        return mega_bond, mega_index
+        self.mega_bond = np.amax(self.bonds)
+        self.mega_index = np.argmax(self.bonds)
+        return self
     
     
     #This is the RG process, does not account for the edge spins
-    def elimination_transformation(self):
+    #def elimination_transformation(self):
         
