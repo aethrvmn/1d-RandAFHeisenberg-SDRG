@@ -33,7 +33,7 @@ class spin_chain:
         return np.sum(s1*s2*self.K)
 
     def __init__(self, length, J):
-        #initializes the groundd state using the specified length, as well as the random K's between [0, J)
+        #initializes the ground state using the specified length, as well as the random K's between [0, J)
         self.length = int(length)
         self.state = np.resize(np.array([0.5, -0.5]), int(length))
         self.K = J*np.random.rand(int(length) - 1)
