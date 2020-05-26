@@ -7,6 +7,5 @@ system1 = Chain(10000,1)
 
 for i in np.arange(1000):
     system1.elimination_transformation()
-    #print(system1.mean)
-    plt.scatter(len(system1.bonds), system1.energy)
+    plt.scatter(len(system1.bonds), system1.mean)
 plt.show()
