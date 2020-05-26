@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from classes.spin_chain_vasil import Chain
+from classes.zero_temp_spin_chain import Chain
 
 system1 = Chain(10000,1)
 
