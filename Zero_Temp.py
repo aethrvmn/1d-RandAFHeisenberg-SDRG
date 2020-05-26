@@ -9,5 +9,3 @@ system1.strong_bond().sys_energy()
 print(system1.energy)
 system1.elimination_transformation()
 print(system1.energy)
-
-

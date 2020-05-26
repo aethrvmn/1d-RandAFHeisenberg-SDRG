@@ -6,7 +6,7 @@ This is the code I have writen to define the Random Antiferromagnetic Heisenberg
 '''
 class Chain:
     
-    version='Alpha v0.9'
+    version='v1'
     
     #Initial call, starts the project by taking in the length and the maximum energy ceiling, and creating a random spin chain based on those.
     def __init__(self, length, ceiling):
