@@ -1,46 +1,48 @@
 import numpy as np
-
+import matplotlib.pyplot as plt
 
 '''
 This is the code I have writen to define the Random Antiferromagnetic Heisenberg Spin Chain and the RG transformation (elimination transformation) for a zero temprature system.
 '''
 class Chain:
     
-    version='v1'
+    version='v1.1'
     
+
     #Initial call, starts the project by taking in the length and the maximum energy ceiling, and creating a random spin chain based on those.
     def __init__(self, length, ceiling):
-        self.length = int(length)
         self.state = np.resize(np.array([0.5, -0.5]), int(length))
         self.bonds = ceiling*np.random.rand(len(self.state) - 1)
         self.length = len(self.state)
-        
-    #This calculates the system energy    
-    def sys_energy(self):
-        #as of right now does not take into account the last spin as it IndexErrors
-        for i in np.arange(self.length):
-            try:
-                self.energy =+ self.bonds[i]*self.state[i]+self.state[i+1]
-                continue
-            except IndexError:
-                break # this is to ensure that it ends when the chain ends
-        return self
+        self.sys_energy()
     
+        #This calculates the system energy    
+    def sys_energy(self):
+        
+        spin_states1 = np.delete(self.state, [0])
+        spin_states2 = np.delete(self.state, [self.length-1])
+        self.energy = np.sum(self.bonds*spin_states1*spin_states2)
+        return self
     
     #This finds the strongest bond
     def strong_bond(self):
         self.mega_bond = np.amax(self.bonds) # strongest bond
         self.mega_index = np.argmax(self.bonds) # the position of the strongest bond
-        self.left_mini_bond = self.bonds[self.mega_index-1] # the bond between the left spin and the one left to it
-        self.right_mini_bond = self.bonds[self.mega_index+1] # the bond between the right spin and the one to the right of it
+        try:
+            self.left_mini_bond = self.bonds[self.mega_index-1] # the bond between the left spin and the one left to it
+        except IndexError:
+            self.left_mini_bond = 0
+        try:
+            self.right_mini_bond = self.bonds[self.mega_index+1] # the bond between the right spin and the one to the right of it
+        except IndexError:
+            self.right_mini_bond = 0
         self.local_energy = self.mega_bond*self.state[self.mega_index]*self.state[self.mega_index+1] # finds the energy that we will remove from the total energy during the transformation
         return self
     
     
     #This is the RG process
     def elimination_transformation(self):
-        self.sys_energy() # compute the energy
-        self.strong_bond() # find the strongest bond
+        self.strong_bond() # compute the energy and find the strongest bond
         
         self.energy_prime = -(0.75)*self.mega_bond - ((0.1875)/self.mega_bond)*((self.left_mini_bond**2) + (self.right_mini_bond**2)) # find the energy contribution
         self.bond_prime = (self.left_mini_bond*self.right_mini_bond)/(2*self.mega_bond) # find the strength of the new bond that will exist after we remove the spins
