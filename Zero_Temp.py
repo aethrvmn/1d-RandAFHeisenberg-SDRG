@@ -3,8 +3,10 @@ import matplotlib.pyplot as plt
 from classes.spin_chain_vasil import Chain
 from classes.spin_chain_tolis import spin_chain
 
-system1 = Chain(100,1)
+system1 = Chain(10000,1)
 
-for i in np.arange(100):
+for i in np.arange(1000):
     system1.elimination_transformation()
-    print(len(system1.bonds))
+    #print(system1.mean)
+    plt.scatter(len(system1.bonds), system1.energy)
+plt.show()
