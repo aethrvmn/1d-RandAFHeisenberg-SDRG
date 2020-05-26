@@ -5,7 +5,6 @@ from classes.spin_chain_tolis import spin_chain
 
 system1 = Chain(100,1)
 
-system1.strong_bond().sys_energy()
-print(system1.energy)
-system1.elimination_transformation()
-print(system1.energy)
+for i in np.arange(100):
+    system1.elimination_transformation()
+    print(len(system1.bonds))
