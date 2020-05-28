@@ -1,10 +1,14 @@
 import numpy as np
+from tqdm import tqdm
 import matplotlib.pyplot as plt
 from classes.zero_temp_spin_chain import Chain
 
-system1 = Chain(10000,1)
 
-for i in np.arange(1000):
-    system1.elimination_transformation()
-    plt.scatter(len(system1.bonds), system1.mean)
-plt.show()
+for j in range(10):
+    system1 = Chain(100000 ,100)
+
+    for i in tqdm(range(10000)):
+        system1.elimination_transformation()
+
+print(len(system1.bonds))
+

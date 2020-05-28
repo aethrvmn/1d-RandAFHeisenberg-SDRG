@@ -1,29 +1,29 @@
 import numpy as np
 
 
-
 '''
 This is the code I have writen to define the Random Antiferromagnetic Heisenberg Spin Chain and the RG transformation (elimination transformation) for a zero temprature system. Currently there is an issue with what happens when the size of the chain falls to zero, and shows an error. I also need to change the distribution method for the bonds so it's an actual random distribution to properly study the RG flow.
 '''
-class Chain:
+class Zero_Temp_Chain:
     
-    version='v1.1'
+    version = 'v1.1.5'
     
 
-    #Initial call, starts the project by taking in the length and the maximum energy ceiling, and creating a random spin chain based on those.
-    def __init__(self, length, ceiling):
+    # Initial call, starts the project by taking in the length and the maximum energy ceiling, and creating a random spin chain based on those.
+    def __init__(self, length, ceiling):#, floor):
         self.state = np.resize(np.array([0.5, -0.5]), int(length))
         self.bonds = ceiling*np.random.rand(len(self.state) - 1)
         self.length = len(self.state)
+        #self.floor = floor
         self.sys_energy() # compute the energy
         self.strong_bond() # find the strongest bond
-        self.mean_bonds()
+        self.mean_bonds() # compute the mean 
         
-    #Calculates the mean value of the bonds    
+    # Calculates the mean value of the bonds    
     def mean_bonds(self):
         self.mean = np.mean(self.bonds)
     
-    #This calculates the system energy    
+    # This calculates the system energy    
     def sys_energy(self):
         
         spin_states1 = np.delete(self.state, [0])
@@ -31,7 +31,7 @@ class Chain:
         self.energy = np.sum(self.bonds*spin_states1*spin_states2)
         return self
     
-    #This finds the strongest bond
+    # This finds the strongest bond
     def strong_bond(self):
         self.mega_bond = np.amax(self.bonds) # strongest bond
         self.mega_index = np.argmax(self.bonds) # the position of the strongest bond
@@ -58,9 +58,9 @@ class Chain:
         return self
     
     
-    #This is the RG process
+    # This is the RG process
     def elimination_transformation(self):
-        
+       # while (self.mega_bond > self.floor):
         self.energy_prime = -(0.75)*self.mega_bond - ((0.1875)/self.mega_bond)*((self.left_mini_bond**2) + (self.right_mini_bond**2)) # find the energy contribution
         try:
             self.bond_prime = (self.left_mini_bond*self.right_mini_bond)/(2*self.mega_bond) # find the strength of the new bond that will exist after we remove the spins
