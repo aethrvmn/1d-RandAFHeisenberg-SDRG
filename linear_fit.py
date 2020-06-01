@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from tqdm import tqdm
-from classes.zero_temp_spin_chain import Chain
+from classes.zero_temp import Chain
 from scipy.optimize import curve_fit
 
 N_systems = 1000 #the amount of different systems we want to check

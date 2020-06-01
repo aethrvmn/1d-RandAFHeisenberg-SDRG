@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from classes.zero_temp_spin_chain import Chain
+from classes.zero_temp import Chain
 from tqdm import tqdm
 from scipy.optimize import curve_fit
 

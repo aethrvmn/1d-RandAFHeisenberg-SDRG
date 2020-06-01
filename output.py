@@ -1,7 +1,7 @@
 import numpy as np
 from tqdm import tqdm
 import matplotlib.pyplot as plt
-from classes.zero_temp_spin_chain import Chain
+from classes.zero_temp import Chain
 
 
 for j in range(10):
@@ -11,4 +11,3 @@ for j in range(10):
         system1.elimination_transformation()
 
 print(len(system1.bonds))
-
