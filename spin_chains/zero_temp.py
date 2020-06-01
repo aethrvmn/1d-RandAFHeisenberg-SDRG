@@ -64,7 +64,7 @@ class ZT_Chain:
 
 
     # This is the RG process
-    def zt_elimination_transformation(self):
+    def zt_elimination(self):
        # while (self.mega_bond > self.floor):
         self.energy_prime = -(0.75)*self.mega_bond - ((0.1875)/self.mega_bond)*((self.left_mini_bond**2) + (self.right_mini_bond**2)) # find the energy contribution
         try:
@@ -76,6 +76,7 @@ class ZT_Chain:
         self.state = np.delete(self.state, [self.mega_index, self.mega_index+1]) # the new chain after removing the spins sharing the strongest bond
         self.bonds[self.mega_index]=self.bond_prime # replacing the strongest bond with the bond prime
         self.bonds = np.delete(self.bonds, [self.mega_index-1, self.mega_index+1]) # removing the bonds next to the bond prime to get the proper new chain
+
 
         self.energy = self.energy - self.local_energy + self.new_local_energy # calculates the new energy of the chain by removing the previous contribution of the strongest bond and adding the new contribution of the newly weak bond in the same spot
         self.strong_bond() # refreshes the strongest bond

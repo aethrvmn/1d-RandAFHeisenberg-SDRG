@@ -1,14 +1,14 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from spin_chains.zero_temp import Chain
+from spin_chains.non_zero_temp import NZT_Chain
 from tqdm import tqdm
 from scipy.optimize import curve_fit
 
 def lin(x, m, b):
     return (m*x) + b
 
-lattice = 1001
-max_value = 100
+lattice = 300
+max_value = 0.75
 iterations = 100
 range_iterations = np.array(range(iterations))
 continuous = np.linspace(0, iterations - 1, iterations*100)
@@ -19,18 +19,18 @@ cov_values = np.zeros(iterations)
 
 for n in tqdm(range(N_systems)):
 
-    system = ZT_Chain(lattice, max_value)
+    system = NZT_Chain(lattice, max_value, 0.1)
 
     for i in np.arange(iterations):
         values[i] = system.bonds.mean()
-        system.elimination_transformation()
+        system.nzt_elimination()
 
     mean_values += values
     cov_values += values**2
 
 mean_values /= N_systems
 cov_values /= N_systems
-cov_values -= mean_values**2
+cov_values -= mean_values**2    
 cov_values = np.sqrt(cov_values)
 
 popt, pcov = curve_fit(lin, range_iterations, mean_values)
