@@ -25,8 +25,8 @@ class ZT_Chain:
 
     # This calculates the system energy
     def sys_energy(self):
-        spin_states1 = np.delete(self.state, [0])
-        spin_states2 = np.delete(self.state, [self.length-1])
+        spin_states1 = np.delete(self.state, [0]) # creates one of the two pseudo-chains to help compute the energy
+        spin_states2 = np.delete(self.state, [self.length-1]) # this is the second pseudo-chain
         self.energy = np.sum(self.bonds*spin_states1*spin_states2)
         return self
 
