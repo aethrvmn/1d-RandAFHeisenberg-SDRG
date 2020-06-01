@@ -19,7 +19,7 @@ cov_values = np.zeros(iterations)
 
 for n in tqdm(range(N_systems)):
 
-    system = Chain(lattice, max_value)
+    system = ZT_Chain(lattice, max_value)
 
     for i in np.arange(iterations):
         values[i] = system.bonds.mean()

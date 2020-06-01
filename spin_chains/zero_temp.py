@@ -2,7 +2,13 @@ import numpy as np
 
 
 '''
-This is the code I have writen to define the Random Antiferromagnetic Heisenberg Spin Chain and the RG transformation (elimination transformation) for a zero temprature system. Currently there is an issue with what happens when the size of the chain falls to zero, and shows an error. I also need to change the distribution method for the bonds so it's an actual random distribution to properly study the RG flow.
+This is the code I have writen to define the Random Antiferromagnetic Heisenberg Spin Chain
+and the RG transformation (elimination transformation) for a zero temprature system.
+Currently there is an issue with what happens when the size of the chain falls to zero,
+and shows an error.
+
+I also need to change the distribution method for the bonds so it's an actual random distribution
+to properly study the RG flow.
 '''
 class ZT_Chain:
 
@@ -15,9 +21,9 @@ class ZT_Chain:
         self.bonds = ceiling*np.random.rand(len(self.state) - 1)
         self.length = len(self.state)
         #self.floor = floor
-        self.sys_energy() # compute the energy
         self.strong_bond() # find the strongest bond
         self.mean_bonds() # compute the mean
+        self.sys_energy() # compute the energy
 
     # Calculates the mean value of the bonds
     def mean_bonds(self):
@@ -41,7 +47,7 @@ class ZT_Chain:
         except IndexError:
             self.left_state = 0
         try:
-            self.right_state = self.state[self.mega_index + 1]
+            self.right_state = self.state[self.mega_index + 2]
         except IndexError:
             self.right_state = 0
 
@@ -50,7 +56,7 @@ class ZT_Chain:
         except IndexError:
             self.left_mini_bond = 0
         try:
-            self.right_mini_bond = self.bonds[self.mega_index+1] # the bond between the right spin and the one to the right of it
+            self.right_mini_bond = self.bonds[self.mega_index+2] # the bond between the right spin and the one to the right of it
         except IndexError:
             self.right_mini_bond = 0
         self.local_energy = self.mega_bond*self.state[self.mega_index]*self.right_state # finds the energy that we will remove from the total energy during the transformation
@@ -58,7 +64,7 @@ class ZT_Chain:
 
 
     # This is the RG process
-    def elimination_transformation(self):
+    def zt_elimination_transformation(self):
        # while (self.mega_bond > self.floor):
         self.energy_prime = -(0.75)*self.mega_bond - ((0.1875)/self.mega_bond)*((self.left_mini_bond**2) + (self.right_mini_bond**2)) # find the energy contribution
         try:
