@@ -70,9 +70,7 @@ class ZT_Chain:
             self.right_mini_bond = self.bonds[self.mega_index+2] # the bond between the right spin and the one to the right of it
         except IndexError:
             self.right_mini_bond = 0
-
-        self.local_hamiltonian = self.mega_bond*self.state[self.mega_index]*self.second_spin # finds the energy that we will remove from the total energy during the transformation
-        self.local_free_energy = -(1/self.beta)*np.log(np.exp(-self.beta*self.local_hamiltonian)) # in essence the local hamiltonian
+        self.local_energy = self.mega_bond*self.state[self.mega_index]*self.right_state # finds the energy that we will remove from the total energy during the transformation
         return self
 
 
