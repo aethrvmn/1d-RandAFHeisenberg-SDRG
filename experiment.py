@@ -22,7 +22,7 @@ for n in tqdm(range(N_systems)):
     system = NZT_Chain(lattice, max_value, 0.1)
 
     for i in np.arange(iterations):
-        values[i] = system.bonds.mean()
+        values[i] = system.mean
         system.nzt_elimination()
 
     mean_values += values

@@ -40,12 +40,23 @@ class ZT_Chain:
     def strong_bond(self):
         self.mega_bond = np.amax(self.bonds) # strongest bond
         self.mega_index = np.argmax(self.bonds) # the position of the strongest bond
-        self.mega_state = self.state[self.mega_index] # the state of the strongest bond
+        self.logmega = -np.log(self.mega_bond)
 
         try:
-            self.left_state = self.state[self.mega_index - 1]
+            self.mega_state = self.state[self.mega_index] # the state of the strongest bond
         except IndexError:
+            print('No more bonds left')
+        #This finds the states of the spins next to the ones sharing the bond
+        try:
+            self.left_state = self.state[self.mega_index - 1]
+        except FutureWarning:
             self.left_state = 0
+
+        try:
+            self.second_spin = self.state[self.mega_index+1]
+        except IndexError:
+            self.second_spin = 0
+
         try:
             self.right_state = self.state[self.mega_index + 2]
         except IndexError:
@@ -59,7 +70,9 @@ class ZT_Chain:
             self.right_mini_bond = self.bonds[self.mega_index+2] # the bond between the right spin and the one to the right of it
         except IndexError:
             self.right_mini_bond = 0
-        self.local_energy = self.mega_bond*self.state[self.mega_index]*self.right_state # finds the energy that we will remove from the total energy during the transformation
+
+        self.local_hamiltonian = self.mega_bond*self.state[self.mega_index]*self.second_spin # finds the energy that we will remove from the total energy during the transformation
+        self.local_free_energy = -(1/self.beta)*np.log(np.exp(-self.beta*self.local_hamiltonian)) # in essence the local hamiltonian
         return self
 
 

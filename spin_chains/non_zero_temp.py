@@ -22,19 +22,22 @@ class NZT_Chain:
         self.length = len(self.state)
         self.beta = 1/temperature
         #self.floor = floor
-        self.mean_bonds() # compute the mean
         self.strong_bond()
+        self.mean_bonds() # compute the mean
         self.chi = self.beta*self.mega_bond
         self.sys_free_energy()
 
     # Calculates the mean value of the bonds
     def mean_bonds(self):
         self.mean = np.mean(self.bonds)
+    #    self.logbonds = np.log((self.mega_bond/self.bonds))
 
     # This finds the strongest bond
     def strong_bond(self):
         self.mega_bond = np.amax(self.bonds) # strongest bond
         self.mega_index = np.argmax(self.bonds) # the position of the strongest bond
+        self.logmega = -np.log(self.mega_bond)
+
         try:
             self.mega_state = self.state[self.mega_index] # the state of the strongest bond
         except IndexError:
@@ -44,12 +47,12 @@ class NZT_Chain:
             self.left_state = self.state[self.mega_index - 1]
         except FutureWarning:
             self.left_state = 0
-            
+
         try:
             self.second_spin = self.state[self.mega_index+1]
         except IndexError:
             self.second_spin = 0
-            
+
         try:
             self.right_state = self.state[self.mega_index + 2]
         except IndexError:
@@ -63,7 +66,7 @@ class NZT_Chain:
             self.right_mini_bond = self.bonds[self.mega_index+2] # the bond between the right spin and the one to the right of it
         except IndexError:
             self.right_mini_bond = 0
-        
+
         self.local_hamiltonian = self.mega_bond*self.state[self.mega_index]*self.second_spin # finds the energy that we will remove from the total energy during the transformation
         self.local_free_energy = -(1/self.beta)*np.log(np.exp(-self.beta*self.local_hamiltonian)) # in essence the local hamiltonian
         return self
@@ -82,7 +85,7 @@ class NZT_Chain:
         self.free_energy = (-1/self.beta)*sp.logsumexp(-self.beta*self.hamiltonian)
         return self
     # This is the RG process
-    
+
     def nzt_elimination(self):
         # while (self.mega_bond > self.floor):
         self.factor_functions()
@@ -93,11 +96,11 @@ class NZT_Chain:
             self.bond_prime = 0
         self.exponential = np.sum(np.exp(-self.beta*self.bond_prime*self.left_state*self.right_state))
         self.new_local_free_energy = self.free_prime - (1/self.beta)*np.log(self.exponential)
-        
+
         self.state = np.delete(self.state, [self.mega_index, self.mega_index+1]) # the new chain after removing the spins sharing the strongest bond
         self.bonds[self.mega_index]=self.bond_prime # replacing the strongest bond with the bond prime
         self.bonds = np.delete(self.bonds, [self.mega_index-1, self.mega_index+1]) # removing the bonds next to the bond prime to get the proper new chain
-        
+
         self.free_energy = self.free_energy - self.local_free_energy + self.new_local_free_energy
         self.strong_bond() # refreshes the strongest bond
         self.mean_bonds() # finds the new mean bond
