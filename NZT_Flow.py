@@ -32,7 +32,7 @@ cov_values /= N_systems
 cov_values -= log_values**2
 cov_values = np.sqrt(cov_values)
 
-#plt.errorbar(range_iterations, log_values, yerr = cov_values)
+plt.errorbar(range_iterations, log_values, yerr = cov_values)
 plt.plot(log_values)
 plt.legend(loc = "upper right")
 plt.ylabel("$\Gamma = -\ln(\Omega)$")
