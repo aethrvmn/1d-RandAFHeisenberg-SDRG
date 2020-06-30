@@ -6,9 +6,13 @@ from random_singlets.ZT_RSS import ZT_Random_Spin
 
 start_time = time.time()
 
-matrix = ZT_Random_Spin(1000,100,0.5)
+matrix1 = ZT_Random_Spin(100,100,0.5)
+matrix2 = NZT_Random_Spin(100,100,0.5, 1)
 
-plt.matshow(matrix.bond_matrix)
+
+plt.matshow(matrix1.bond_matrix)
+plt.matshow(matrix2.bond_matrix)
 plt.show()
 
-print("--- %s seconds ---" % (time.time() - start_time))
+duration = time.time() - start_time
+print("--- %s seconds ---" %duration)
