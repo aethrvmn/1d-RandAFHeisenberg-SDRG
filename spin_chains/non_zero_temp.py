@@ -76,7 +76,7 @@ class NZT_Chain:
         self.V = (1-(np.exp(-self.chi))*(1-self.chi))/(1+(3*np.exp(-self.chi)))
         self.W = (1-(np.exp(-self.chi))*(1+self.chi))/(1+(3*np.exp(-self.chi)))
 
-    #Equation of the free energy of the non zero temprature system
+    #Equation of the free energy of the non zero temperature system
     def sys_free_energy(self):
         spin_states1 = np.delete(self.state, [0]) # creates one of the two pseudo-chains to help compute the energy
         spin_states2 = np.delete(self.state, [self.length-1]) # this is the second pseudo-chain
