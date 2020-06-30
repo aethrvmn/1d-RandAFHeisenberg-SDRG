@@ -12,7 +12,7 @@ to properly study the RG flow.
 '''
 class NZT_Chain:
 
-    version = 'v0.1'
+    version = 'v1.1.5'
 
 
     # Initial call, starts the project by taking in the length and the maximum energy ceiling, and creating a random spin chain based on those.

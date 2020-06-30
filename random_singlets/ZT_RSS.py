@@ -4,7 +4,7 @@ import numpy as np
 
 class ZT_Random_Spin:
 
-    version="v0.1"
+    version="v0.5"
 
     def __init__(self, number_of_bonds, ceiling, floor):
         self.length = int(number_of_bonds) #the self.length of the chain (actually the total amount of bonds so chain-1)
