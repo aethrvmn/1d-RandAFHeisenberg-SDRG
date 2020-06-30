@@ -4,7 +4,7 @@ import scipy.special as sp
 
 class NZT_Random_Spin:
 
-    version="v0.1"
+    version="v0.4"
 
     def __init__(self, number_of_bonds, ceiling, floor, temperature):
         self.length = int(number_of_bonds) #the self.length of the chain (actually the total amount of bonds so chain-1)
