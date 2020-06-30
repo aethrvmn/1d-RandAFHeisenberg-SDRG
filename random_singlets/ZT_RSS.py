@@ -8,7 +8,7 @@ class ZT_Random_Spin:
 
     def __init__(self, number_of_bonds, celing, floor):
         length = int(number_of_bonds) #the length of the chain (actually the total amount of bonds so chain-1)
-        bond_matrix = numpy.zeros(shape=(length,length)) #initialzes the bond matrix
+        bond_matrix = numpy.zeros(shape=(length+2,length+2)) #initialzes the bond matrix
         initial_bonds = ceiling*np.random.rand(len(length))
         np.fill_diagonal(bond_matrix, initial_bonds) #adds the bonds
         self.average_strength() # compute the average strength of the bonds
@@ -20,9 +20,12 @@ class ZT_Random_Spin:
         return self
 
     def strongest_bond(self):
-        self.max_bond = np.max(bond_matrix)
+        self.max_bond = np.amax(bond_matrix)
+        self.max_index = np.argmax(bond_matrix)
         return self
 
     def average_strength(self):
-        self.mean = np.sum((bond_matrix/length))
+        self.mean = np.sum(bond_matrix)/length)
         return self
+
+    def renormalization(self):
