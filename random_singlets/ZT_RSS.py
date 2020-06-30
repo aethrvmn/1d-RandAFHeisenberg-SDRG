@@ -21,7 +21,7 @@ class ZT_Random_Spin:
 
     def strongest_bond(self):
         self.max_bond = np.amax(bond_matrix)
-        self.max_index = np.argmax(bond_matrix)
+        self.max_index = np.argwhere(bond_matrix.max() == bond_matrix)
         return self
 
     def average_strength(self):
