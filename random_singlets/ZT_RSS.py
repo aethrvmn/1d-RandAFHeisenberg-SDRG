@@ -4,7 +4,7 @@ import numpy as np
 
 class ZT_Random_Spin:
 
-    version="v0.7"
+    version="v0.9"
 
     def __init__(self, number_of_bonds, ceiling, floor):
         self.length = int(number_of_bonds) #the self.length of the chain (actually the total amount of bonds so chain-1)
@@ -14,8 +14,10 @@ class ZT_Random_Spin:
         A = np.c_[np.zeros(self.length), self.bond_matrix, np.zeros(self.length)] #this allows us to add two columns of 0s, essentially closing the system and also solves IndexErrors for when the max bond is in the boundaries
         self.bond_matrix = np.r_[[np.zeros(self.length+2)], A, [np.zeros(self.length+2)]] #this adds the rows of 0s, see above
         self.average_strength()
-        self.sys_energy()
         self.bonds()
+        self.sys_energy()
+        self.logarithmic()
+        self.floor = floor
 
 
     #computes the energy
@@ -39,19 +41,24 @@ class ZT_Random_Spin:
         self.mean = np.sum(self.bond_matrix)/self.length
         return self
 
+    def logarithmic(self):
+        self.logmax = -np.log(self.max_bond)
+        self.logbonds = np.log(self.max_bond/self.bond_matrix)
+        self.logbonds[self.logbonds == np.inf] = 0
     #This is the RG process
     def renormalization(self):
-        while (self.mega_bond > self.floor):
-            energy_prime = -(1/4)*self.max_bond - ((3/16)/self.max_bond)*((self.left_bond**2) + (self.right_bond**2)) # find the energy contribution
-            self.bond_prime = (self.left_mini_bond*self.right_mini_bond)/(2*self.mega_bond) # find the strength of the new bond that will exist after we remove the spins
-            self.new_local_energy = self.energy_prime + (self.bond_prime*self.state[self.mega_index-1]*self.state[self.mega_index]) # finds the energy that we will add to the total energy after we remove the spins/bonds that existed
+        #while (self.max_bond > self.floor):
+        energy_prime = -(1/4)*self.max_bond - ((3/16)/self.max_bond)*((self.left_bond**2) + (self.right_bond**2)) # find the energy contribution
+        bond_prime = (self.left_bond*self.right_bond)/(2*self.max_bond) # find the strength of the new bond that will exist after we remove the spins
+        self.local_energy = (-1/4)*np.sum(self.bond_matrix[self.max_index])
+        self.new_local_energy = energy_prime -(1/4)*bond_prime # finds the energy that we will add to the total energy after we remove the spins/bonds that existed
 
-            self.state = np.delete(self.state, [self.mega_index, self.mega_index+1]) # the new chain after removing the spins sharing the strongest bond
-            self.bonds[self.mega_index]=self.bond_prime # replacing the strongest bond with the bond prime
-            self.bonds = np.delete(self.bonds, [self.mega_index-1, self.mega_index+1]) # removing the bonds next to the bond prime to get the proper new chain
+        # self.state = np.delete(self.state, [self.mega_index, self.mega_index+1]) # the new chain after removing the spins sharing the strongest bond
+        # self.bonds[self.mega_index]=self.bond_prime # replacing the strongest bond with the bond prime
+        # self.bonds = np.delete(self.bonds, [self.mega_index-1, self.mega_index+1]) # removing the bonds next to the bond prime to get the proper new chain
 
-
-            self.energy = self.energy - self.local_energy + self.new_local_energy # calculates the new energy of the chain by removing the previous contribution of the strongest bond and adding the new contribution of the newly weak bond in the same spot
-            self.strong_bond() # refreshes the strongest bond
-            self.mean_bonds()
+        self.system_energy = self.system_energy - self.local_energy + self.new_local_energy # calculates the new energy of the chain by removing the previous contribution of the strongest bond and adding the new contribution of the newly weak bond in the same spot
+        self.average_strength() # recalculates the average strength
+        self.bonds() # refreshes the strongest bond
+        self.logarithmic()
         return self

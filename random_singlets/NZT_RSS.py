@@ -38,3 +38,20 @@ class NZT_Random_Spin:
     def factor_functions(self):
         self.V = (1-(np.exp(-self.chi))*(1-self.chi))/(1+(3*np.exp(-self.chi)))
         self.W = (1-(np.exp(-self.chi))*(1+self.chi))/(1+(3*np.exp(-self.chi)))
+
+    # def renormalization(self):
+    #     #while (self.max_bond > self.floor):
+    #     energy_prime = -(1/4)*self.max_bond - ((3/16)/self.max_bond)*((self.left_bond**2) + (self.right_bond**2)) # find the energy contribution
+    #     bond_prime = (self.left_bond*self.right_bond)/(2*self.max_bond) # find the strength of the new bond that will exist after we remove the spins
+    #     self.local_energy = (-1/4)*np.sum(self.bond_matrix[self.max_index])
+    #     self.new_local_energy = energy_prime -(1/4)*bond_prime # finds the energy that we will add to the total energy after we remove the spins/bonds that existed
+    #
+    #     # self.state = np.delete(self.state, [self.mega_index, self.mega_index+1]) # the new chain after removing the spins sharing the strongest bond
+    #     # self.bonds[self.mega_index]=self.bond_prime # replacing the strongest bond with the bond prime
+    #     # self.bonds = np.delete(self.bonds, [self.mega_index-1, self.mega_index+1]) # removing the bonds next to the bond prime to get the proper new chain
+    #
+    #     self.system_energy = self.system_energy - self.local_energy + self.new_local_energy # calculates the new energy of the chain by removing the previous contribution of the strongest bond and adding the new contribution of the newly weak bond in the same spot
+    #     self.average_strength() # recalculates the average strength
+    #     self.bonds() # refreshes the strongest bond
+    #     self.logarithmic()
+    #     return self
