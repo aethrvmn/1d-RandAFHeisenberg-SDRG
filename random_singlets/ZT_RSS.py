@@ -8,33 +8,21 @@ class ZT_Random_Spin:
 
     def __init__(self, number_of_bonds, celing, floor):
         length = int(number_of_bonds) #the length of the chain (actually the total amount of bonds so chain-1)
-        self.bond_matrix = numpy.zeros(shape=(self.length,self.length)) #initialzes the bond matrix
-        self.max_bond = 0 #initialzes a value for the biggest bond
-        #this creates the bond matrix
-        for i in range(length):
-            for j in range(length):
-                if i == j:
-                    self.bond_matrix[i][j] = ceiling*np.random.uniform(0,1)
-                    if self.max_bond < self.bond_matrix[i][j]:
-                        self.max_bond = self.bond_matrix[i][j]
-                    else:
-                        continue
-                else:
-                    continue
-        #end of bond_matrix
-        self.average_strength() # compute the mean
+        bond_matrix = numpy.zeros(shape=(length,length)) #initialzes the bond matrix
+        initial_bonds = ceiling*np.random.rand(len(length))
+        np.fill_diagonal(bond_matrix, initial_bonds) #adds the bonds
+        self.average_strength() # compute the average strength of the bonds
         self.sys_energy() # compute the energy
+        self.strongest_bond() #finds the strongest bond
 
     def sys_energy(self):
-        energy = np.zeros(shape=(int(length)))
-        for i in range(length):
-            for j in range(length):
-                energy[i] += (-1/4)*bond_matrix[i][j]
-        system_energy = np.sum(energy)
+        self.system_energy = (-1/4)*np.sum(bond_matrix)
+        return self
+
+    def strongest_bond(self):
+        self.max_bond = np.max(bond_matrix)
+        return self
 
     def average_strength(self):
-        mean = np.zeros(shape=(int(length)))
-        for i in range(length):
-            for j in range(length):
-                mean[i] += bond_matrix[i][j]
-         average = np.sum((mean/length))
+        self.mean = np.sum((bond_matrix/length))
+        return self
