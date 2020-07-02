@@ -39,12 +39,14 @@ class ZT_Random_Spin:
     def bonds(self):
         self.max_bond = np.amax(self.bond_matrix)
         self.max_index = np.argwhere(self.bond_matrix.max() == self.bond_matrix).ravel()
-        self.left__i_index = self.max_index[0]-1
-        self.right_i_index = self.max_index[0]+1
-        self.left__j_index = self.max_index[1]-1
-        self.right_j_index = self.max_index[1]+1
-        self.left_bond = np.sum(self.bond_matrix[self.left_index])
-        self.right_bond = np.sum(self.bond_matrix[self.right_index])
+        self.left_index = np.argwhere(self.bond_matrix[][self.max_index[1]] != 0.0).ravel()
+        self.right_index = np.argwhere(self.bond_matrix[self.max_index[0] + 1] != 0.0).ravel()
+        # self.left_i_index = self.max_index[0]-1
+        # self.right_i_index = self.max_index[1]+1
+        # self.left_j_index = self.max_index[0]-1
+        # self.right_j_index = self.max_index[1]+1
+        self.left_bond = np.sum(self.bond_matrix[self.left_i_index])
+        self.right_bond = np.sum(self.bond_matrix[self.right_i_index])
         return self
 
     #computes the average strength of the bonds
@@ -82,23 +84,23 @@ class ZT_Random_Spin:
                 self.bond_matrix[self.right_i_index] = 0
                 self.bond_matrix[self.left_i_index][self.right_j_index] = bond_prime
                 self.bond_matrix[self.left_i_index][self.left_j_index] = 0
-                print('pp1')
+                print(self.left_index, self.right_index, '1')
         #This is the first order of RG
             #This is for the situation where the next bond has been RG transformed.
             elif self.right_rg_spot:
                 self.bond_matrix[self.right_i_index] = 0
-                self.bond_matrix[self.left_i_index][self.left_j_index+2] = bond_prime
-                self.bond_matrix[self.left_i_index][self.left_j_index] = 0
-                print('pp2')
+                self.bond_matrix[self.left_i_index] = 0
+                self.bond_matrix[self.left_i_index][self.right_j_index+2] = bond_prime
+                print(self.left_index, self.right_index, '2')
             #This is for the situation where the previous bond has been RG transformed.
             elif self.left_rg_spot:
                 self.bond_matrix[self.right_i_index] = 0
-                self.bond_matrix[self.left_i_index-2][self.left_j_index] = bond_prime
-                self.bond_matrix[self.left_i_index][self.left_j_index] = 0
-                print('pp3')
+                self.bond_matrix[self.left_i_index] = 0
+                self.bond_matrix[self.left_i_index-2][self.right_j_index] = bond_prime
+                print(self.left_index, self.right_index,'3')
             elif self.old_rg_spot:
-                self.bond_matrix[self.left_i_index][self.right_j_index + 2] = bond_prime
-                self.bond_matrix[self.right_i_index + 2] = 0
+                self.bond_matrix[self.left_i_index][self.right_j_index + 1] = bond_prime
+                self.bond_matrix[self.right_i_index + 1] = 0
 
 
 
