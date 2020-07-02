@@ -10,12 +10,6 @@ class ZT_Random_Spin:
         self.length = int(number_of_bonds) #the self.length of the chain (actually the total amount of bonds so chain-1)
         self.ceiling = ceiling
         self.floor = floor
-        # self.bond_matrix = np.zeros(shape=(self.length ,self.length)) #initialzes the bond matrix
-        # initial_bonds = ceiling*np.random.rand(self.length)
-        # np.fill_diagonal(self.bond_matrix, initial_bonds) #adds the bonds
-        # A = np.c_[np.zeros(self.length), self.bond_matrix, np.zeros(self.length)] #this allows us to add two columns of 0s, essentially closing the system and also solves IndexErrors for when the max bond is in the boundaries
-        # A = np.r_[[np.zeros(self.length + 2)], A, [np.zeros(self.length + 2)]] #this adds the rows of 0s, see above
-        # self.bond_matrix = A
         self.matrix_creator()
         self.average_strength()
         self.bonds()
@@ -60,8 +54,6 @@ class ZT_Random_Spin:
 
     def logarithmic(self):
         self.logmax = -np.log(self.max_bond)
-        # self.logbonds = np.log(self.max_bond/self.bond_matrix)
-        # self.logbonds[self.logbonds == np.inf] = 0
 
     def RG_logic(self):
         #self.bond_matrix[self.bond_matrix == 0.0] = np.nan
