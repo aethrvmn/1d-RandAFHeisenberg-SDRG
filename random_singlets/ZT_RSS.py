@@ -65,7 +65,7 @@ class ZT_Random_Spin:
 
     def RG_logic(self):
         #self.bond_matrix[self.bond_matrix == 0.0] = np.nan
-        self.new_rg_spot = self.bond_matrix[self.left__i_index][self.left_j_index] != 0 and self.bond_matrix[self.right_i_index][self.right_j_index] != 0
+        self.new_rg_spot = self.bond_matrix[self.left_i_index][self.left_j_index] != 0 and self.bond_matrix[self.right_i_index][self.right_j_index] != 0
         self.right_rg_spot = self.bond_matrix[self.left_i_index][self.left_j_index] != 0 and self.bond_matrix[self.right_i_index][self.right_j_index] == 0
         self.left_rg_spot = self.bond_matrix[self.left_i_index][self.left_j_index] == 0 and self.bond_matrix[self.right_i_index][self.right_j_index] != 0
         self.old_rg_spot = self.max_index[0] != self.max_index[1]# and
@@ -87,26 +87,26 @@ class ZT_Random_Spin:
         #This it the zero order of RG
             #This is for the situation where the max bond is in a new area of the chain, i.e. no previous RG transformations.
             if self.new_rg_spot:
-                self.bond_matrix[self.right_index] = 0
+                self.bond_matrix[self.right_i_index] = 0
                 self.bond_matrix[self.left_i_index][self.right_j_index] = bond_prime
                 self.bond_matrix[self.left_i_index][self.left_j_index] = 0
                 print('pp1')
         #This is the first order of RG
             #This is for the situation where the next bond has been RG transformed.
             elif self.right_rg_spot:
-                self.bond_matrix[self.right_index] = 0
-                self.bond_matrix[self.left_i_index][self.right_j_index+2] = bond_prime
+                self.bond_matrix[self.right_i_index] = 0
+                self.bond_matrix[self.left_i_index][self.left_j_index+2] = bond_prime
                 self.bond_matrix[self.left_i_index][self.left_j_index] = 0
                 print('pp2')
             #This is for the situation where the previous bond has been RG transformed.
             elif self.left_rg_spot:
-                self.bond_matrix[self.right_index] = 0
-                self.bond_matrix[self.left_i_index-2][self.right_j_index] = bond_prime
+                self.bond_matrix[self.right_i_index] = 0
+                self.bond_matrix[self.left_i_index-2][self.left_j_index] = bond_prime
                 self.bond_matrix[self.left_i_index][self.left_j_index] = 0
                 print('pp3')
             elif self.old_rg_spot:
                 self.bond_matrix[self.left_i_index][self.right_j_index + 2] = bond_prime
-                self.bond_matrix[self.right_index + 2] = 0
+                self.bond_matrix[self.right_i_index + 2] = 0
 
 
 
