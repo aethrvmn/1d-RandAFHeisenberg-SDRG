@@ -20,7 +20,7 @@ class ZT_Random_Spin:
 
     def matrix_creator(self):
         self.bond_matrix = np.zeros(shape=(self.length ,self.length)) #initialzes the bond matrix
-        initial_bonds = self.ceiling*np.random.rand(self.length)
+        initial_bonds = self.ceiling*np.random.uniform(0, self.ceiling, self.length)
         np.fill_diagonal(self.bond_matrix, initial_bonds) #adds the bonds
         A = np.c_[np.zeros(self.length), self.bond_matrix, np.zeros(self.length)] #this allows us to add two columns of 0s, essentially closing the system and also solves IndexErrors for when the max bond is in the boundaries
         A = np.r_[[np.zeros(self.length + 2)], A, [np.zeros(self.length + 2)]] #this adds the rows of 0s, see above
