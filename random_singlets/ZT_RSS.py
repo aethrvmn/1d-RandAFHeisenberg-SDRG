@@ -4,7 +4,7 @@ import numpy as np
 
 class ZT_Random_Spin:
 
-    version="v0.9"
+    version="v0.9.5"
 
     def __init__(self, number_of_bonds, ceiling, floor):
         self.length = int(number_of_bonds) #the self.length of the chain (actually the total amount of bonds so chain-1)
@@ -17,7 +17,7 @@ class ZT_Random_Spin:
         self.logarithmic()
 
 
-
+    #creates and defines the matrix, adding "padding" of 2 zero rows+columns to dodge the issue of biggest bond in the boundaries
     def matrix_creator(self):
         self.bond_matrix = np.zeros(shape=(self.length ,self.length)) #initialzes the bond matrix
         initial_bonds = self.ceiling*np.random.uniform(0, self.ceiling, self.length)
@@ -39,14 +39,13 @@ class ZT_Random_Spin:
     def bonds(self):
         self.max_bond = np.amax(self.bond_matrix)
         self.max_index = np.argwhere(self.bond_matrix.max() == self.bond_matrix).ravel()
-        self.left_index = np.argwhere(self.bond_matrix[][self.max_index[1]] != 0.0).ravel()
-        self.right_index = np.argwhere(self.bond_matrix[self.max_index[0] + 1] != 0.0).ravel()
-        # self.left_i_index = self.max_index[0]-1
-        # self.right_i_index = self.max_index[1]+1
-        # self.left_j_index = self.max_index[0]-1
-        # self.right_j_index = self.max_index[1]+1
-        self.left_bond = np.sum(self.bond_matrix[self.left_i_index])
-        self.right_bond = np.sum(self.bond_matrix[self.right_i_index])
+        self.left_np_index = np.argwhere(self.bond_matrix[self.max_index[1] - 1] != 0.0).ravel() #I need to try and fix this, it gives an empty array
+        self.right_np_index = np.argwhere(self.bond_matrix[self.max_index[0] + 1] != 0.0).ravel() #np is non permanent, as we turn it into an intiger
+        self.left_index = int(self.left_np_index)
+        self.right_index = int(self.right_np_index)
+        self.left_bond = np.sum(self.bond_matrix[self.left_index])
+        self.right_bond = np.sum(self.bond_matrix[self.right_index])
+        print(self.left_np_index, self.right_np_index )
         return self
 
     #computes the average strength of the bonds
@@ -59,9 +58,9 @@ class ZT_Random_Spin:
 
     def RG_logic(self):
         #self.bond_matrix[self.bond_matrix == 0.0] = np.nan
-        self.new_rg_spot = self.bond_matrix[self.left_i_index][self.left_j_index] != 0 and self.bond_matrix[self.right_i_index][self.right_j_index] != 0
-        self.right_rg_spot = self.bond_matrix[self.left_i_index][self.left_j_index] != 0 and self.bond_matrix[self.right_i_index][self.right_j_index] == 0
-        self.left_rg_spot = self.bond_matrix[self.left_i_index][self.left_j_index] == 0 and self.bond_matrix[self.right_i_index][self.right_j_index] != 0
+        self.new_rg_spot = self.bond_matrix[self.left_index][self.left_index] != 0 and self.bond_matrix[self.right_index][self.right_index] != 0
+        self.right_rg_spot = self.bond_matrix[self.left_index][self.left_index] != 0 and self.bond_matrix[self.right_index][self.right_index] == 0
+        self.left_rg_spot = self.bond_matrix[self.left_index][self.left_index] == 0 and self.bond_matrix[self.right_index][self.right_index] != 0
         self.old_rg_spot = self.max_index[0] != self.max_index[1]# and
         return self
 
@@ -81,26 +80,28 @@ class ZT_Random_Spin:
         #This it the zero order of RG
             #This is for the situation where the max bond is in a new area of the chain, i.e. no previous RG transformations.
             if self.new_rg_spot:
-                self.bond_matrix[self.right_i_index] = 0
-                self.bond_matrix[self.left_i_index][self.right_j_index] = bond_prime
-                self.bond_matrix[self.left_i_index][self.left_j_index] = 0
-                print(self.left_index, self.right_index, '1')
+                self.bond_matrix[self.right_index] = 0
+                self.bond_matrix[self.left_index][self.right_index] = bond_prime
+                self.bond_matrix[self.left_index][self.left_index] = 0
+                print(self.left_index, self.right_index, 'nrg1')
         #This is the first order of RG
             #This is for the situation where the next bond has been RG transformed.
             elif self.right_rg_spot:
-                self.bond_matrix[self.right_i_index] = 0
-                self.bond_matrix[self.left_i_index] = 0
-                self.bond_matrix[self.left_i_index][self.right_j_index+2] = bond_prime
+                self.bond_matrix[self.right_index] = 0
+                self.bond_matrix[self.left_index] = 0
+                self.bond_matrix[self.left_index][self.right_index+2] = bond_prime
                 print(self.left_index, self.right_index, '2')
             #This is for the situation where the previous bond has been RG transformed.
             elif self.left_rg_spot:
-                self.bond_matrix[self.right_i_index] = 0
-                self.bond_matrix[self.left_i_index] = 0
-                self.bond_matrix[self.left_i_index-2][self.right_j_index] = bond_prime
+                self.bond_matrix[self.right_index] = 0
+                self.bond_matrix[self.left_index] = 0
+                self.bond_matrix[self.left_index-2][self.right_index] = bond_prime
                 print(self.left_index, self.right_index,'3')
+            #This is for the situation where a bond that has already been transformed is being RG transformed again.
             elif self.old_rg_spot:
-                self.bond_matrix[self.left_i_index][self.right_j_index + 1] = bond_prime
-                self.bond_matrix[self.right_i_index + 1] = 0
+                self.bond_matrix[self.left_index][self.right_index + 1] = bond_prime
+                self.bond_matrix[self.right_index + 1] = 0
+                print('WIP')
 
 
 
