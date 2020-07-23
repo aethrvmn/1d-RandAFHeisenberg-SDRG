@@ -15,8 +15,6 @@ bounds=[-matrix1.ceiling, -0.0000000001,0.0000000001, matrix1.ceiling]
 norm = colors.BoundaryNorm(bounds, cmap.N)
 
 
-
-
 #matrix1.renormalization()
 # # plt.matshow(matrix2.bond_matrix)
 
