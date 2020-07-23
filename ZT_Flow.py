@@ -6,8 +6,8 @@ import time
 
 start_time = time.time()
 
-N_systems = 1000 #the amount of different systems we want to check
-lattice_size = 1001 # the number of spin particles
+N_systems = 100 #the amount of different systems we want to check
+lattice_size = 99 # the number of spin particles
 ceiling = 1 # the ceiling for the possible strength of the bonds
 floor = 0.01 # the floor to stop the RG process at low energies
 transformation_iterations = 300 # how many transformations should be made in each system
@@ -23,7 +23,7 @@ cov_values = np.zeros(transformation_iterations)
 for i in tqdm(range(N_systems)):
     system = ZT_Random_Spin(lattice_size, ceiling, floor) #this creates the spin chain based on the chain class
     for j in range(transformation_iterations):
-        system.zt_elimination()
+        system.renormalization()
         values[j] = system.logmax
     log_values += values
     cov_values += values**2
