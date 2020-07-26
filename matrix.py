@@ -16,11 +16,11 @@ norm = colors.BoundaryNorm(bounds, cmap.N)
 
 
 #matrix1.renormalization()
-# # plt.matshow(matrix2.bond_matrix)
+print(matrix1.bond_matrix)
 
 duration = time.time() - start_time
 #print("---%s seconds---" %duration, matrix1.system_energy)
 img = plt.imshow(matrix1.bond_matrix,interpolation='nearest', cmap=cmap, norm=norm)
 #print(matrix1.left_index, '\n',matrix1.right_index )
-#plt.show()
+plt.show()
 
