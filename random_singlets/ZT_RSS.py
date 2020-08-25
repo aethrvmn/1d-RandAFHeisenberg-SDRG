@@ -40,15 +40,23 @@ class ZT_Random_Spin:
         self.max_bond = np.amax(self.bond_matrix)
         self.max_index = np.argwhere(self.bond_matrix.max() == self.bond_matrix).ravel()
         #self.left_index = np.array([self.max_index[0] - 1, int(np.nonzero(self.bond_matrix[][self.max_index[0] - 1]))]) #This is still not fixed
-        self.left_index = np.array([[self.max_index[0] - 1, np.where(self.bond_matrix)])
+        # self.left_index = np.array([self.max_index[0] - 1, np.where(self.bond_matrix)])
+        for i in range(self.max_index[0]):
+            if (self.bond_matrix[i][self.max_index[1]-1] != 0):
+                left_index = np.array([i, self.max_index[1]-1])
+                break
+            else:
+                left_index = ":("
+                continue
         print(self.left_index)
+        # self.left_index = np.array([left_index_1], )
         self.right_index = np.array([self.max_index[1] + 1, int(np.nonzero(self.bond_matrix[self.max_index[1] + 1])[0])])
         self.left_bond = self.bond_matrix[self.left_index[0]][self.left_index[1]]
         self.right_bond = self.bond_matrix[self.right_index[0]][self.right_index[1]]
         try:
-        print(self.left_index, self.max_index, self.right_index)
+            print(self.left_index, self.max_index, self.right_index)
         except TypeError:
-        print('daisy')
+            print('daisy')
         return self
 
     #computes the average strength of the bonds
