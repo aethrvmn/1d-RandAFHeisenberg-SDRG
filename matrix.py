@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 from matplotlib import colors
-import numpy as np
 import time
 from random_singlets.NZT_RSS import NZT_Random_Spin
 from random_singlets.ZT_RSS import ZT_Random_Spin
@@ -15,7 +14,7 @@ bounds=[-matrix1.ceiling, -0.0000000001,0.0000000001, matrix1.ceiling]
 norm = colors.BoundaryNorm(bounds, cmap.N)
 
 
-#matrix1.renormalization()
+matrix1.renormalization()
 print(matrix1.bond_matrix)
 
 duration = time.time() - start_time
