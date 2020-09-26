@@ -1,10 +1,9 @@
 import numpy as np
 
-"Ok, let's try again, but this time let's make it work using matrices."
 
 class ZT_Random_Spin:
 
-    version="v0.9.7"
+    version="v0.9.9"
 
     def __init__(self, number_of_bonds, ceiling, floor):
         self.length = int(number_of_bonds) #the self.length of the chain (actually the total amount of bonds so chain-1)
@@ -40,14 +39,15 @@ class ZT_Random_Spin:
         self.max_bond = np.amax(self.bond_matrix)
         self.max_index = np.argwhere(self.bond_matrix.max() == self.bond_matrix).ravel()
         for i in range(self.max_index[0]):
-            if (self.bond_matrix[i][self.max_index[0]-1] != 0):
-                self.left_index = np.array([i, self.max_index[0]-1])
+            if (self.bond_matrix[self.max_index[0]-i][self.max_index[1]-1] > 0):
+                self.left_index = np.array([self.max_index[0]-i, self.max_index[0]-1])
                 break
             else:
                 self.left_index = np.array([0,0])
                 continue
-        for j in range(self.length - self.max_index[1]):
-            if (self.bond_matrix[self.max_index[1]+1][self.max_index[1]+j] != 0):
+
+        for j in range(self.max_index[1]):
+            if (self.bond_matrix[self.max_index[1]+1][self.max_index[1]+j] > 0):
                 self.right_index = np.array([self.max_index[1]+1, self.max_index[1]+j])
                 break
             else:
