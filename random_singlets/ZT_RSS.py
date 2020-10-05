@@ -3,7 +3,7 @@ import numpy as np
 
 class ZT_Random_Spin:
 
-    version="v0.9.9"
+    version="v1.0.0"
 
     def __init__(self, number_of_bonds, ceiling, floor):
         self.length = int(number_of_bonds) #the self.length of the chain (actually the total amount of bonds so chain-1)
@@ -28,6 +28,7 @@ class ZT_Random_Spin:
         A = np.c_[np.zeros(self.length + 4), A, np.zeros(self.length + 4)]
         A = np.r_[[np.zeros(self.length + 6)], A, [np.zeros(self.length + 6)]]
         self.bond_matrix = A
+        return self
 
     #computes the energy
     def sys_energy(self):
@@ -38,17 +39,20 @@ class ZT_Random_Spin:
     def bonds(self):
         self.max_bond = np.amax(self.bond_matrix)
         self.max_index = np.argwhere(self.bond_matrix.max() == self.bond_matrix).ravel()
+        print(self.max_index)
         for i in range(self.max_index[0]):
             if (self.bond_matrix[self.max_index[0]-i][self.max_index[1]-1] > 0):
-                self.left_index = np.array([self.max_index[0]-i, self.max_index[0]-1])
+                self.left_index = np.array([self.max_index[0]-i, self.max_index[1]-1])
                 break
             else:
                 self.left_index = np.array([0,0])
                 continue
-
-        for j in range(self.max_index[1]):
+        for j in np.arange(self.max_index[1]):
             if (self.bond_matrix[self.max_index[1]+1][self.max_index[1]+j] > 0):
-                self.right_index = np.array([self.max_index[1]+1, self.max_index[1]+j])
+                try:
+                    self.right_index = np.array([self.max_index[1]+1, self.max_index[1]+j])
+                except IndexError:
+                    self.right_index = np.array([0,0])
                 break
             else:
                 self.right_index = np.array([0,0])
@@ -65,16 +69,7 @@ class ZT_Random_Spin:
     def logarithmic(self):
         self.logmax = -np.log(self.max_bond)
 
-    # def RG_logic(self):
-    #     #self.bond_matrix[self.bond_matrix == 0.0] = np.nan
-    #     self.new_rg_spot = self.bond_matrix[self.left_index[0]][self.left_index[0]] != 0 and self.bond_matrix[self.right_index[0]][self.right_index[0]] != 0
-    #     self.right_rg_spot = self.bond_matrix[self.left_index][self.left_index] != 0 and self.bond_matrix[self.right_index][self.right_index] == 0
-    #     self.left_rg_spot = self.bond_matrix[self.left_index][self.left_index] == 0 and self.bond_matrix[self.right_index][self.right_index] != 0
-    #     self.old_rg_spot = self.max_index[0] != self.max_index[1]# and
-    #     return self
-
     #This is the RG process
-    #This thing is extremely hard, I have no hopes but here it goes
     def renormalization(self):
             # self.RG_logic()
         self.average_strength() # recalculates the average strength
@@ -85,25 +80,11 @@ class ZT_Random_Spin:
         self.local_energy = (-1/4)*np.sum(self.bond_matrix[self.max_index])
         self.new_local_energy = energy_prime -(1/4)*bond_prime # finds the energy that we will add to the total energy after we remove the spins/bonds that existed
 
-        self.bond_matrix[self.left_index[0]] = 0
-        self.bond_matrix[self.right_index[1]] = 0
+        self.bond_matrix[self.left_index[0]][self.left_index[1]] = 0
+        self.bond_matrix[self.right_index[0]][self.right_index[1]] = 0
         self.bond_matrix[self.left_index[0]][self.right_index[1]] = bond_prime
         self.bond_matrix[self.max_index[0]][self.max_index[1]] = self.max_bond - self.ceiling
         self.system_energy = self.system_energy - self.local_energy + self.new_local_energy # calculates the new energy of the chain by removing the previous contribution of the strongest bond and adding the new contribution of the newly weak bond in the same spot
-
-                        #print(self.left_index, self.right_index)
-                    #This is the first order of RG
-                        #This is for the situation where the next bond has been RG transformed.
-                        # elif self.right_rg_spot:
-                        #     self.bond_matrix[self.left_index[0]][self.right_index[1]] = bond_prime
-                        #     print(self.left_index, self.right_index, 'nrg2')
-                        # #This is for the situation where the previous bond has been RG transformed.
-                        # elif self.left_rg_spot:
-                        #     self.bond_matrix[self.left_index[0]][self.right_index[1]] = bond_prime
-                        #     print(self.left_index, self.right_index,'nrg3')
-                        #This is for the situation where a bond that has already been transformed is being RG transformed again.
-                        #elif self.old_rg_spot:
-                            # self.bond_matrix[self.left_index][self.right_index + 1] = bond_prime
-                            # self.bond_matrix[self.right_index + 1] = 0
-                        #print('WIP')
+        if self.bond_matrix[0][0]!=0:
+            self.bond_matrix[0][0] = 0
         return self
