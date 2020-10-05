@@ -39,7 +39,6 @@ class ZT_Random_Spin:
     def bonds(self):
         self.max_bond = np.amax(self.bond_matrix)
         self.max_index = np.argwhere(self.bond_matrix.max() == self.bond_matrix).ravel()
-        print(self.max_index)
         for i in range(self.max_index[0]):
             if (self.bond_matrix[self.max_index[0]-i][self.max_index[1]-1] > 0):
                 self.left_index = np.array([self.max_index[0]-i, self.max_index[1]-1])
