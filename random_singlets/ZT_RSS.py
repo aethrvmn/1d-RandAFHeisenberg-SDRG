@@ -23,10 +23,10 @@ class ZT_Random_Spin:
         np.fill_diagonal(self.bond_matrix, initial_bonds) #adds the bonds
         A = np.c_[np.zeros(self.length), self.bond_matrix, np.zeros(self.length)] #this allows us to add two columns of 0s, essentially closing the system and also solves IndexErrors for when the max bond is in the boundaries
         A = np.r_[[np.zeros(self.length + 2)], A, [np.zeros(self.length + 2)]] #this adds the rows of 0s, see above
-        A = np.c_[np.zeros(self.length + 2), A, np.zeros(self.length + 2)]
-        A = np.r_[[np.zeros(self.length + 4)], A, [np.zeros(self.length + 4)]]
-        A = np.c_[np.zeros(self.length + 4), A, np.zeros(self.length + 4)]
-        A = np.r_[[np.zeros(self.length + 6)], A, [np.zeros(self.length + 6)]]
+        #A = np.c_[np.zeros(self.length + 2), A, np.zeros(self.length + 2)]
+        #A = np.r_[[np.zeros(self.length + 4)], A, [np.zeros(self.length + 4)]]
+        #A = np.c_[np.zeros(self.length + 4), A, np.zeros(self.length + 4)]
+        #A = np.r_[[np.zeros(self.length + 6)], A, [np.zeros(self.length + 6)]]
         self.bond_matrix = A
         return self
 
