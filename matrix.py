@@ -6,21 +6,18 @@ from random_singlets.ZT_RSS import ZT_Random_Spin
 
 start_time = time.time()
 
-matrix1 = ZT_Random_Spin(3,1,0.0000001)
+matrix1 = ZT_Random_Spin(90,1,0.0001)
 matrix2 = NZT_Random_Spin(99,1,0.5, 1)
 
 cmap = colors.ListedColormap(['black','white','green'])
 bounds=[-matrix1.ceiling, -0.0000000000001,0.0000000000001, matrix1.ceiling]
 norm = colors.BoundaryNorm(bounds, cmap.N)
 
-while matrix1.max_bond > matrix1.floor:
+while matrix1.max_bond > matrix1.floor and matrix1.end_rg == 0:
     matrix1.renormalization()
-    print(matrix1.left_index, matrix1.max_index, matrix1.right_index)
-#print(matrix1.bond_matrix)
-    time.sleep(1)
     img = plt.imshow(matrix1.bond_matrix,interpolation='nearest', cmap=cmap, norm=norm)
-    plt.pause(0.0001)
+    plt.pause(0.01)
+duration = time.time() - start_time #if anyone wants to flex their machine they should uncomment the print at the bottom.
 plt.show()
-duration = time.time() - start_time
-print("---%s seconds---" %duration)
+#print("---%s seconds---" %duration) 
 

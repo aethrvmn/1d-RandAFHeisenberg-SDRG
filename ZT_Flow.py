@@ -6,11 +6,11 @@ import time
 
 start_time = time.time()
 
-N_systems = 1 #the amount of different systems we want to check
-lattice_size = 30 # the number of spin particles
+N_systems = 1000 #the amount of different systems we want to check
+lattice_size = 90 # the number of spin particles
 ceiling = 1 # the ceiling for the possible strength of the bonds
-floor = 0.01 # the floor to stop the RG process at low energies
-transformation_iterations = 300 # how many transformations should be made in each system
+floor = 0.000000001 # the floor to stop the RG process at low energies
+transformation_iterations = 3000 # how many transformations should be made in each system
 range_iterations = np.array(range(transformation_iterations))
 
 plt.style.use('fivethirtyeight')
