@@ -74,12 +74,6 @@ class ZT_Random_Spin:
 
     def logarithmic(self):
         self.logmax = -np.log(self.max_bond)
-    
-    def rg_end(self):
-        self.end_rg = 0
-        self.bonds()
-        if self.max_bond == 0.0:
-            self.end_rg = 1
 
     #This is the RG process
     def renormalization(self):
@@ -100,3 +94,9 @@ class ZT_Random_Spin:
         self.bonds() # refreshes the strongest bond
         self.rg_end() #checks for non-singlets
         return self
+    
+    def rg_end(self):
+        self.end_rg = 0
+        self.bonds()
+        if self.max_bond == 0.0:
+            self.end_rg = 1
