@@ -5,10 +5,9 @@ class ZT_Random_Spin:
 
     version="v1.1.5"
 
-    def __init__(self, number_of_bonds, ceiling, floor):
+    def __init__(self, number_of_bonds, ceiling):
         self.length = int(number_of_bonds) #the self.length of the chain (actually the total amount of bonds so chain-1)
         self.ceiling = ceiling
-        self.floor = floor
         self.matrix_creator()
         self.average_strength()
         self.bonds()
