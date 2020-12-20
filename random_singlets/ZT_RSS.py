@@ -1,6 +1,5 @@
 import numpy as np
 
-
 class ZT_Random_Spin:
 
     version="v2"
