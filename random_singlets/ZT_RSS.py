@@ -3,7 +3,7 @@ import numpy as np
 
 class ZT_Random_Spin:
 
-    version="v1.1.5"
+    version="v2"
 
     def __init__(self, number_of_bonds, ceiling):
         self.length = int(number_of_bonds) #the self.length of the chain (actually the total amount of bonds so chain-1)
@@ -14,6 +14,7 @@ class ZT_Random_Spin:
         self.rg_end()
         self.sys_energy()
         self.logarithmic()
+
 
     #creates and defines the matrix, adding "padding" of 2 zero rows+columns to dodge the issue of biggest bond in the boundaries
     def matrix_creator(self):
@@ -73,11 +74,21 @@ class ZT_Random_Spin:
 
     def logarithmic(self):
         self.logmax = -np.log(self.max_bond)
+        return self
 
+    #def distance(self):
+        
+        #left_distance = self.max_index[0] - self.left_index[1]
+        #right_distance = self.right_index[0] - self.max_index[1]
+        #self.distance = np.sqrt(np.power(self.max_index[0], 2) + np.power(self.max_index[1], 2))
+        #self.distance = self.right_index[0]-self.left_index[1]
+        #self.bonds()
+        #return self
+    
     def rescale(self):
-        tbc = self.max_bond
+        temporary_val = self.max_bond
         self.bonds()
-        val = tbc - self.max_bond
+        val = temporary_val - self.max_bond
         for i in np.arange(self.length+2):
             for j in np.arange(self.length+2):
                 if self.bond_matrix[i][j] > 0:
@@ -100,6 +111,10 @@ class ZT_Random_Spin:
         self.system_energy = self.system_energy - self.local_energy + self.new_local_energy # calculates the new energy of the chain by removing the previous contribution of the strongest bond and adding the new contribution of the newly weak bond in the same spot
         if self.bond_matrix[0][0]!=0:
             self.bond_matrix[0][0] = 0
+            
+        self.distance = self.right_index[1]-self.left_index[0]
+        
+        #self.distance()
         self.average_strength() # recalculates the average strength
         self.logarithmic() #evaluates the log variable for the rg flow
         self.rescale() # rescales the matix and also refreshes the biggest bond search
@@ -111,3 +126,4 @@ class ZT_Random_Spin:
         self.bonds()
         if self.max_bond == 0.0:
             self.end_rg = 1
+        return self

@@ -13,7 +13,7 @@ ceiling = 1 # the ceiling for the possible strength of the bonds
 #Num_iteration = 3000 # how many transformations should be made in each system
 
 
-Num_models = 1000
+Num_models = 100
 Num_iteration = 40
 range_iterations = np.array(range(Num_iteration))
 
@@ -34,8 +34,7 @@ cov_values /= Num_models
 cov_values -= values**2
 cov_values = np.sqrt(cov_values)
 
-plt.errorbar(range_iterations, values, yerr = cov_values)
-#plt.plot(values)
+plt.errorbar(range_iterations, values)#
 plt.legend(loc = "upper right")
 plt.ylabel("$\Gamma = -\ln(\Omega)$")
 plt.xlabel("RG iterations")
