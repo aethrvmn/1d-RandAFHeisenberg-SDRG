@@ -35,8 +35,8 @@ class ZT_Random_Spin:
         #finds the strongest bond
         self.max_bond = np.amax(self.bond_matrix)
         self.max_index = np.argwhere(self.bond_matrix.max() == self.bond_matrix).ravel()
-    
-        #finds the bond to the left 
+
+        #finds the bond to the left
         self.left_index = np.array([0, 0])
         self.left_bond = 0
         left_search_area_x = self.max_index[0]
@@ -50,7 +50,7 @@ class ZT_Random_Spin:
         else:
             self.left_index = np.array([0, 0])
             self.left_bond = 0
-        
+
         #finds the bond to the right
         self.right_index = np.array([self.length+1, self.length+1])
         self.right_bond =0
@@ -65,7 +65,7 @@ class ZT_Random_Spin:
             self.right_bond =0
         #print(self.left_index, self.max_index, self.right_index)
         return self
-    
+
     #computes the average strength of the bonds
     def average_strength(self):
         self.mean = np.sum(self.bond_matrix)/self.length
@@ -73,6 +73,18 @@ class ZT_Random_Spin:
 
     def logarithmic(self):
         self.logmax = -np.log(self.max_bond)
+
+    def rescale(self):
+        tbc = self.max_bond
+        self.bonds()
+        val = tbc - self.max_bond
+        for i in np.arange(self.length+2):
+            for j in np.arange(self.length+2):
+                if self.bond_matrix[i][j] > 0:
+                    self.bond_matrix[i][j] += val
+                else:
+                    continue
+        return self
 
     #This is the RG process
     def renormalization(self):
@@ -90,10 +102,10 @@ class ZT_Random_Spin:
             self.bond_matrix[0][0] = 0
         self.average_strength() # recalculates the average strength
         self.logarithmic() #evaluates the log variable for the rg flow
-        self.bonds() # refreshes the strongest bond
+        self.rescale() # rescales the matix and also refreshes the biggest bond search
         self.rg_end() #checks for non-singlets
         return self
-    
+
     def rg_end(self):
         self.end_rg = 0
         self.bonds()
