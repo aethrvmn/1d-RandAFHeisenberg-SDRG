@@ -6,22 +6,34 @@ from random_singlets.ZT_RSS import ZT_Random_Spin
 
 fig = plt.figure()
 
+ax = plt.gca()
+ax.set_xticks(np.arange(-0.5, 31, 1))
+ax.set_yticks(np.arange(-0.5, 31, 1))
+ax.set_xticklabels('')
+ax.set_yticklabels('')
+ax.grid(color='k', linestyle='-', linewidth=0.05)
 matrix = ZT_Random_Spin(30,1)
 
 cmap = colors.ListedColormap(['black','white','yellow'])
 bounds=[-matrix.ceiling, -0.0000000000001,0.0000000000001, matrix.ceiling]
 norm = colors.BoundaryNorm(bounds, cmap.N)
 ims = []
+img = plt.imshow(matrix.bond_matrix, interpolation='nearest', cmap=cmap, norm=norm, animated=True)
+img.figure.savefig('Figures/Matrix/startmatrix.png')
 
+i=0
 while matrix.end_rg == 0:
     matrix.renormalization()
+    if i == 1 or i == 5 or i == 10 or i ==13:
+        img.figure.savefig('Figures/Matrix/midrg'+str(i)+'.png')
     img = plt.imshow(matrix.bond_matrix, interpolation='nearest', cmap=cmap, norm=norm, animated=True)
     ims.append([img])
-    #plt.pause(1)
+    i+=1
 
 ani = animation.ArtistAnimation(fig, ims, interval=200, blit=True, repeat_delay=10000)
-ani.save('rg.mp4')
-img.figure.savefig('singlet-phase.png')
+ani.save('Figures/rg.mp4')
+
+img.figure.savefig('Figures/Matrix/singlet-phase.png')
 plt.show()
 
 

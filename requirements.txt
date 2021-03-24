@@ -2,4 +2,3 @@ scipy
 numpy
 matplotlib
 tqdm
-time
