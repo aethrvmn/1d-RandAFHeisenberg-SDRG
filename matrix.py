@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from matplotlib import colors
 from random_singlets.ZT_RSS import ZT_Random_Spin
-
 fig = plt.figure()
 
 ax = plt.gca()
@@ -31,10 +30,7 @@ while matrix.end_rg == 0:
     i+=1
 
 ani = animation.ArtistAnimation(fig, ims, interval=200, blit=True, repeat_delay=10000)
-ani.save('Figures/rg.mp4')
+ani.save('Figures/rg.gif')
 
 img.figure.savefig('Figures/Matrix/singlet-phase.png')
 plt.show()
-
-
-
