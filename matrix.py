@@ -2,10 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from matplotlib import colors
-from random_singlets.ZT_RSS import ZT_Random_Spin
+from chain import Random_chain
 
 length = 100
-matrix = ZT_Random_Spin(length,1,0)
+matrix = Random_chain(length,1,0)
 
 fig = plt.figure()
 
