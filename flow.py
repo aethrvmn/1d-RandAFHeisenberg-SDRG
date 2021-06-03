@@ -54,6 +54,6 @@ plt.figure(3)
 plt.plot(p,ppp)
 plt.plot(p,np.exp(-p), '--')
 plt.yscale('log')
-plt.savefig('Figures/maybe(?).png')
+plt.savefig('Figures/maybe.png')
 
 plt.show()
