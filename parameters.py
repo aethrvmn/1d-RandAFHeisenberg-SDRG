@@ -5,7 +5,7 @@ from tqdm import tqdm
 import seaborn as sns
 
 length=1000
-iterations=20
+iterations=100
 
 genen=np.zeros(int(length/2))
 gendist=[]
