@@ -54,6 +54,5 @@ plt.ylabel('$-\ln(\Omega)$')
 plt.xlabel('Iteration step')
 plt.savefig('Figures/energyscale.png')
 plt.yscale('log')
-plt.xscale('log')
 
 plt.show()
