@@ -4,8 +4,8 @@ import matplotlib.animation as animation
 from matplotlib import colors
 from chain import Random_chain
 
-length = 100
-matrix = Random_chain(length,1,0)
+length = 30
+matrix = Random_chain(length,1)
 
 fig = plt.figure()
 
