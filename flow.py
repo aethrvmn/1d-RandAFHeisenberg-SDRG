@@ -5,55 +5,51 @@ import seaborn as sns
 import statsmodels.api as sm
 from tqdm import tqdm
 
-length=1000
-val=np.zeros(length)
-matrix = Random_chain(length,1,0)
+def generator():
+    while matrix.end_rg == 0:
+        yield
 
+length = 200
+matrix = Random_chain(length,1)
+eta = []
 leg=[]
+i=0
 
-plt.figure(1)
-for i in tqdm(range(int(length/2))):
-    if i == 0 or i==10 or i%100==0:
+for _ in tqdm(generator()):
+    if i == 0 or i==10 or i%40==0:
         plt.figure(1)
         sns.kdeplot(matrix.bond_matrix[matrix.bond_matrix != 0], bw_method=.5)
         leg = np.append(leg, 'Distribution for the '+str(i)+'th Iteration')
+    eta = np.append(eta, matrix.eta)
     matrix.renormalization()
-    
-plt.figure(2)
-dens = sm.nonparametric.KDEUnivariate(matrix.bond_matrix[matrix.bond_matrix != 0])
-dens.fit(bw=.5)
-x =np.linspace(0,1,100)
-y = dens.evaluate(x)
+    i+=1
 
-pp = np.sort(-np.log(np.abs(matrix.bond_matrix[matrix.bond_matrix != 0])))
+step = 1
+parts = int(len(eta)/step)
+sum = []
 
-step = 10
-parts = int(len(pp)/step)
-p=np.linspace(0,1,parts)
-ppp = []
-for i in tqdm(np.arange(0, len(pp), step)):
-    ppp = np.append(ppp, np.sum(pp[i:]))
-    
+for i in tqdm(np.arange(0, len(eta), step)):
+    val = np.sum(eta[i:])
+    if val != 0:
+        sum = np.append(sum, val)
+
+rescaled_range=np.linspace(0,1,len(sum))
+
+plt.figure(1)
 plt.figure(1)
 plt.xlim(0, 1)
 plt.ylabel('Distribution of bonds')
-plt.xlabel('J')
-plt.yticks([])
+plt.xlabel('Strength $J$ of the bonds')
 plt.legend(leg)
 plt.savefig('Figures/distribution.png')
 
 plt.figure(2)
-plt.yticks([])
-plt.ylabel('Distribution of bonds')
-plt.plot(x,y)
-plt.plot(x, np.exp(-x),'--')
-plt.xlabel('J')
-plt.savefig('Figures/singlet_dist.png')
 
-plt.figure(3)
-plt.plot(p,ppp)
-plt.plot(p,np.exp(-p), '--')
+plt.plot(rescaled_range, sum/sum.max())
+plt.plot(rescaled_range, np.exp(-5*rescaled_range), '--r')
 plt.yscale('log')
-plt.savefig('Figures/maybe.png')
+plt.ylabel('Value of $\eta$ during the SDRG')
+plt.xlabel('Iteration step (rescaled).')
+plt.savefig('Figures/fixed_dist.png')
 
 plt.show()
