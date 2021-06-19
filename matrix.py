@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from matplotlib import colors
 from chain import Random_chain
+from tqdm import tqdm
 
 length = 30
 matrix = Random_chain(length,1)
@@ -23,14 +24,12 @@ ims = []
 img = plt.imshow(matrix.bond_matrix, interpolation='nearest', cmap=cmap, norm=norm, animated=True)
 img.figure.savefig('Figures/Matrix/startmatrix.png', pad_inches=0, transparent=True)
 
-i=0
-while matrix.end_rg == 0:
+for i in tqdm(range(int(length/2))):
     matrix.renormalization()
     if i == 1 or i == 5 or i == 10 or i ==13:
         img.figure.savefig('Figures/Matrix/midrg'+str(i)+'.png', pad_inches=0, transparent=True)
     img = plt.imshow(matrix.bond_matrix, interpolation='nearest', cmap=cmap, norm=norm, animated=True)
     ims.append([img])
-    i+=1
 
 ani = animation.ArtistAnimation(fig, ims, interval=200, blit=True, repeat_delay=10000)
 ani.save('Figures/rg.gif')
