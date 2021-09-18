@@ -1,0 +1,44 @@
+\documentclass[../sdrg,../../main.tex]{subfiles}
+\begin{document}
+\section{Physical Properties}
+
+
+Since the ground state of the random spin chain is composed by singlet pairs , where the spins can be arbitrarily remote and the effective interaction between them is rapidly decreasing with the distance, in order to assess the strength of the long bonds we must determine the relation between the energy and length scales. The probability of connected spins at scale $\Gamma$ is $P(0,\Gamma)$, so when $\Gamma$ is increased by $\dd\Gamma$, a fraction $2P(0,\Gamma)\dd\Gamma$ of the spins left are removed. Near the fixed point, $P(0,\Gamma)=\flatfrac{Q(0,\Gamma)}{\Gamma}\approx \flatfrac{Q_{0}^{*}}{\Gamma}=\flatfrac{1}{\Gamma}$, the number of spins $n$ changes due to the renormalisation step
+\begin{equation}
+    \dv{n}{\Gamma}=-2\frac{Q_{0}^{*}}{\Gamma}n_{\Gamma}=\frac{-2}{\Gamma}n_{\Gamma}
+\end{equation}
+meaning that the fraction of non-decimated spins at the new energy scale is
+\begin{equation}
+    n_{\Gamma}=\frac{1}{\Gamma^{2}}
+\end{equation}
+
+The typical length between the remaining spins at energy scale $\Gamma$ is therefore
+\begin{equation}
+\label{eq:distance}
+    L(\Gamma)\sim\frac{1}{n_{\Gamma}}\sim\Gamma^{2}\sim[\ln(\Omega)]^{2}
+\end{equation}
+which makes sense, since each $\ln{J}$ is a sum, with alternating signs of a series of $\ln{J_n}$. If there was no correlation between the remaining spins at scale $\Gamma$ and the bonds appearing in the sum, then the sum would be an asymptotically Gaussian random variable, having mean zero and variance such that $\Gamma\sim\sqrt{L}$. The form of (\ref{eq:distance}) is that of a dynamical scaling at an infinite disorder fixed point.
+
+\subsection{Low Temperature Susceptibility}
+
+The low temperature susceptibility is estimated by studying how the system is affected when exposed to external fields for different rations of thermal energy $T$ and energy scale $\Omega$. In the low temperature case, $\Omega >> T$, the strongly coupled pairs are very weakly excited by the fluctuations of
+the thermal energy, whilst in the opposite limit, $T >> \Omega$, the remaining pairs are very weakly coupled, since $J<<T$, and they are therefore uncoupled and free to contribute to the Curie susceptibility, which goes as $\sim T$. In this case, one should stop the renormalization procedure at the limit where $\Omega=T$, where the remaining spins, that have a density $n_{\Gamma}\sim \ln^{2}(\sfrac{\Omega}{T})$, all contribute by a Curie susceptibility giving
+\begin{equation}
+    \chi_{}\sim\chi_{z}\sim\frac{n_{\Gamma_{T}}}{T}\sim\frac{1}{T\left[\ln\frac{\Omega}{T}\right]^{2}}
+\end{equation}
+
+The transverse and longitudinal susceptibilities have the same singular behaviour where the Curie-type susceptibility is modified by log-type corrections. Because these corrections are very strong, they typically lead in measuring effective temperature dependent critical exponents.
+
+\subsection{Average Pair Correlation Function}
+
+The average pair correlation function between two spins at distance $r\sim L$ is dominated by the remaining spins at length scale $L$, because the decimated spins form singlets, the correlation between spins of different singlets is negligible. The probability to have a free spin at length scale $L$ is $n_{\Gamma_{L}}\sim\sfrac{1}{L}$, whilst for 2 spins it's $n_{\Gamma_{L}}^{2}$. There's a finite probability that under further decimation, the two spins will form a singlet, and will therefore have a correlation $C(r)=\mathcal{O}(1)$. If we average the correlation over spin-pairs with mutual distance $r$, we get
+\begin{equation}
+    \expval{C(r)}\sim \frac{(-1)^{r}}{r^{2}}
+\end{equation}
+
+By considering two randomly chosen spins at distance $r$, we expect that typically they will belong to different singlet pairs, and therefore the typical correlations will be very weak. If the length scale during the decimation is $L=r$, the two spins become nearest neighbours with effective coupling $J_{L}\sim\Omega_{L}$ which measures the size of these correlations. We therefore have
+\begin{equation}
+    -\ln C_{typ}(r)\sim\ln\Omega_{L}\sim\Gamma_{L}^{-1}\sim\frac{1}{L^{1/2}}\sim\frac{1}{r^{1/2}}
+\end{equation}
+which is completely different from the average correlation function. We therefore note that the correlation function in the random singlet phase is non-self averaging.
+\end{document}

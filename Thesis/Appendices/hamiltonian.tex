@@ -1,0 +1,59 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{The Heisenberg Hamiltonian}
+
+When we take a look at a system of two electrons the Hamiltonian is
+\begin{equation}
+    H\Phi=H_{0}\Phi+V\Phi=E\Phi
+\end{equation}
+where $\Phi$ is the spatial wavefunction, $V$ the Coulomb interaction between the two electrons and $H_{0}$ is the basic Hamiltonian
+\begin{equation}
+    H_{0}=\frac{p^{2}}{2m}
+\end{equation}
+
+By including the spin interaction, the state of the combination of the electrons is in a superposition of the states
+\begin{equation}
+    \Psi=\left\{ \begin{array}{cc}
+        \Phi_{s}\ket{s}  \\
+        \Phi_{t}\ket{t}
+    \end{array} \right.
+\end{equation}
+where $\ket{s}$ is the singlet and $\ket{t}$ is the triplet state.\\
+
+Since we're dealing with fermions, due to the Pauli exclusion principle, the wavefunction $\Psi$ must be anti-symmetric and therefore $\Phi_{s}$ must be symmetric, whilst $\Phi_{t}$ is anti-symmetric.\\
+
+Because of the different symmetric properties, the expected value of the Coulomb energy is different for the singlet state and the triplet state. The difference, symbolised as $J$ is 
+\begin{equation}
+    J:=E_{s}-E_{t}=\expval{V}{\Phi_{s}}-\expval{V}{\Phi_{t}}
+\end{equation}
+$J$ is also known as the \textit{exchange integral}. We can see why if, once we express $\Phi_{s/t}$ as
+\begin{equation}
+    \Phi_{s/t}:=\Phi_{\pm}=\frac{1}{\sqrt{2}}\left[\phi_{a}(r_{1})\phi_{b}(r_{2})\pm\phi_{a}(r_{2})\phi_{b}(r_{1})\right]
+\end{equation}
+and remember what Dirac notation is, we write
+\begin{equation}
+    J=2\iint\ \dd r_{1}\dd r_{2}\ \phi_{a}^{*}(r_{1})\phi_{b}^{*}(r_{2})V\phi_{a}(r_{2})\phi_{b}(r_{1})
+\end{equation}
+
+The symmetry of the spins decides the symmetry of the spatial wavefunctions meaning that the alignment of the spins determines the electrostatic energy $\expval{V}{\Psi}$. In the singlet state the spins are antiparallel while, in the triplet state, they are parallel. Because $J$ is derived solely from a spin-independent Hamiltonian, it serves as an indication for the dependance of the Coulomb energy from the orientation of the spins.\\
+
+The sign of $J$ carries a special significance. If $J$ is positive, the system if said to be ferromagnetic, while if it's negative, the system is said to be antiferromagnetic. Because the spatial states are sufficient to study the electromagnetic properties, for each pair of electrons we have four states. We can combine the singlet and triplet states by defining a new Hamiltonian
+\begin{equation}
+    H_{1,2}=\left(\frac{1}{4}E_{s}+\frac{3}{4}E_{t}\right)-(E_{s}-E_{t})\vec{S}_{1}\vec{S}_{2}
+\end{equation}
+By ignoring the constant term, since it's only contribution is to shift the ground state energy, we can rewrite the new Hamiltonian as
+\begin{equation}
+    H_{1,2}=-J\vec{S}_{1}\vec{S}_{2}
+\end{equation}
+
+The above is the Heisenberg Hamiltonian for a pair of electrons. If we want to expand to a solid with $N$ electrons, we should probably account for the effect of the lattice on the states and how that affects the interactions between the electrons, but we don't. Instead, we expand the Hamiltonian by assuming that each electron simply interacts with every other in the same way and we sum over all interactions. The effects of the lattice are then assumed to act as an external field on each spin
+\begin{equation}
+    H=-\sum_{ij} J_{ij}\vec{S}_{i}\vec{S}_{j} -g\mu_{B}H\sum_{i}\vec{S}_{i}
+\end{equation}
+
+By ignoring the external field and assuming that the interaction is weaker as we move further from each spin and keep only the terms with nearest neighbour interactions, we can simplify even further. In this case, the Hamiltonian changes again to take the form
+\begin{equation}
+    H=-J\sum_{i}\vec{S}_{i}\vec{S}_{i+1}
+\end{equation}
+\end{document}

@@ -1,0 +1,86 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\chapter{Pertubation of the Random XX Spin Chain}
+\label{appendix:pert}
+
+The local Hamiltonian, considering solely the bond between the spins $\vec{S}_{2}$ and $\vec{S}_{3}$ is
+
+\begin{equation}
+H_{0} = J_{2} \vec{S}_{2}\cdot \vec{S}_{3}
+\end{equation}
+
+This XX system has a singlet state as its ground state $\ket{s}$ and three triplet states as the excited states $\ket{t}$. In the basis of $S^{z}$
+
+\begin{align}
+    &\ket{s} = \frac{1}{\sqrt{2}}(\ket{\updownarrows}-\ket{\downuparrows})\\
+    &\ket{t_{1}} = \ket{\upuparrows}\\
+    &\ket{t_{0}} = \frac{1}{\sqrt{2}}(\ket{\updownarrows} + \ket{\downuparrows})\\
+    &\ket{t_{-1}} = \ket{\downdownarrows}
+\end{align}
+
+If we use the spin ladder operations, we can rewrite the Hamiltonian as
+\begin{equation}
+    H_0=\frac{J_{2}}{2}(S_{1}^{+}S_{2}^{-}+S_{1}^{-}S_{2}^{+})
+    \label{eq:spinlad}
+\end{equation}
+from which we get
+\begin{equation}
+\begin{split}
+E_s &= -\frac{1}{2}J_{2}\\
+E_{t_{1}} &= E_{t_{-1}} = 0\\
+E_{t_{0}} &= \frac{1}{2}J_{2}
+\end{split}
+\end{equation}
+
+If we add the contributions of the nearest neighbours, $\vec{S}_{1},\ \vec{S}_{4}$, and by the assumption that $J_{2}$ is the strongest bond, we can treat $J_{1},\ J_{3}$ perturbatively, giving us the Hamiltonian
+\begin{equation}
+    H=H_{0}+\mathcal{H}
+\end{equation}
+where $\mathcal{H}$ is given by
+\begin{equation}
+    \mathcal{H}=J_{1}\vec{S}_{1}\cdot\vec{S}_{2}+J_{3}\vec{S}_{3}\cdot\vec{S}_{4}
+\end{equation}
+
+Perturbatively expanding around $\mathcal{H}$, modifies the energy of the ground state $E_{s}$ by
+\begin{equation}
+\label{eq:Pert}
+    E_{s}\rightarrow E_{s}+\bra{s}\mathcal{H}\ket{s}+\sum_{t}\abs{\bra{s}\mathcal{H}\ket{t}}^{2}\frac{1}{E_{s}-E_{t}}
+\end{equation}
+
+Using Eq.(\ref{eq:spinlad}), for fixed $\vec{S}_{1},\ \vec{S}_{4}$, we can show that 
+\begin{equation}
+\begin{gathered}
+\expval{\mathcal{H}}{s} = \bra{s}\mathcal{H}\ket{t_{0}} = 0\\
+\abs{\bra{s}\mathcal{H}\ket{t_{1}}}^{2} = \frac{1}{8}[J_{1}^{2}\vec{S}_{1}^{+}\vec{S}_{1}^{-} + J_{3}^{2}\vec{S}_{4}^{+}\vec{S}_{4}^{-} - J_{1}J_{3}(\vec{S}_{1}^{+}\vec{S}_{4}^{-} + \vec{S}_{4}^{+}\vec{S}_{1}^{-})] \\
+\abs{\bra{s}\mathcal{H}\ket{t_{-1}}}^{2} = \frac{1}{8}[J_{1}^{2}\vec{S}_{1}^{-}\vec{S}_{1}^{+} + J_{3}^{2}\vec{S}_{4}^{-}\vec{S}_{4}^{+} - J_{1}J_{3}(\vec{S}_{1}^{-}\vec{S}_{4}^{+} + \vec{S}_{4}^{-}\vec{S}_{1}^{+})] \\
+\end{gathered}
+\end{equation}
+
+Thus, the sum becomes
+\begin{equation}
+\begin{split}
+    \sum_{t}\abs{\bra{s}\mathcal{H}\ket{t}}^{2}\frac{1}{E_{s}-E_{t}} = 
+    -\frac{2}{J_{2}} \left[\frac{J_{1}^{2}}{8}(\vec{S}_{1}^{+}\vec{S}_{1}^{-} + \vec{S}_{1}^{-}\vec{S}_{1}^{+}) + \frac{J_{3}^{2}}{8}(\vec{S}_{4}^{+}\vec{S}_{4}^{-} + \vec{S}_{4}^{-}\vec{S}_{4}^{+})\right.\\ \left.-\frac{J_{1}J_{3}}{4}(\vec{S}_{1}^{+}\vec{S}_{4}^{-} + \vec{S}_{4}^{+}\vec{S}_{1}^{-})\right]
+    \end{split}
+\end{equation}
+
+The sums of the form $\vec{S}_{i}'^{+}\vec{S}_{i}'^{-} + \vec{S}_{i}'^{-}\vec{S}_{i}'^{+}$ act on the same spin and exhibit a very useful behaviour. $S^{+}$ annihilates an up spin, whilst $S^{-}$ annihilates a down spin. This means that whenever this duet of operators in the parenthesis act upon a state, one of them becomes 0, while the other one leaves the state unchanged. This means that the previous cumbersome equality simplifies to
+\begin{equation}
+    \sum_{t}\abs{\bra{s}\mathcal{H}\ket{t}}^{2}\frac{1}{E_{s}-E_{t}} =  -\frac{2}{J_{2}}\left[\frac{J_{1}^{2}}{8} + \frac{J_{3}^{2}}{8} -\frac{J_{1}J_{3}}{4}(\vec{S}_{1}\cdot\vec{S}_{4})\right]
+\end{equation}
+where we inverted back from Eq.(\ref{eq:spinlad}).\\
+
+
+Rearranging and plugging the results into the pertubation introduced earlier in this Appendix, we end up with
+\begin{equation}
+E_{s}=E_{s}'+J'\vec{S}_{1}\cdot\vec{S}_{4}
+\end{equation}
+where
+\begin{equation}
+\begin{gathered}
+    E_{s}'=-\frac{1}{2}J_{2}-\frac{1}{4J_{2}}(J_{1}^{2}+J_{3}^{2})\\
+    J'=\frac{J_{1}J_{3}}{J_{2}}
+\end{gathered}
+\end{equation}
+\end{document}

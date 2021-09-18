@@ -1,0 +1,34 @@
+\documentclass[../intro.tex,../../main.tex]{subfiles}
+\begin{document}
+\section{Relation to the Ising Model}
+
+
+Both the Heisenberg and Ising models constitute simplified models of magnetism in materials and magnetic phase transitions. Nevertheless, the models differ in their symmetric properties, which are crucial for determining certain universal\footnote{We will briefly touch on the subject of universality classes later in this section.} characteristics of phase transitions.\\
+
+In the Ising model, we have spins $S_{i}$ that can either take the value $-1 \text{ or }+1$ with each spin living on each site of an arbitrary N-lattice. Typically, the interaction of spins is between nearest neighbors, with the Hamiltonian being
+\begin{equation}
+    H_{Ising}=-J\sum_{i=1}^{N}S_{i}S_{i+1}
+\end{equation}
+where we have specifically assumed a 1d model for simplicity.\footnote{Also for consistency of notation with the rest of the thesis.} If $J<0$, it's energetically preferable for neighboring spins to point in the same direction, macroscopically meaning a ferromagnet, while if $J>0$ the preference is to point to opposite directions, meaning an antiferromagnet.\\
+
+The Heisenberg model looks extremely similar, except for the fact that spin now represents a three-dimensional unit vector ($\vec{S}_{i}$) pointing anywhere on the unit sphere. The Hamiltonian is therefore 
+\begin{equation}
+    H_{Heisenberg}=-J\sum_{i=1}^{N}\vec{S}_{i}\vec{S}_{i+1}
+\end{equation}
+
+\subsection{A Brief Discussion on Universality Classes}
+
+\hspace{\parindent} Although universality classes in general fall outside of the scope of this thesis, it is useful to know why symmetry properties are important.\\
+
+As we approach the critical point of a continuous phase transition, the correlation length typically diverges. The longer and longer lenght scales then become relevant to understand the underlying physics of the system. If we imagine coarse graining the original spin system iteratively, the remaining spins represent the average behaviour of larger and larger patches of bare spins. If we repeat this process up to correlation length, we have generated a series of energy functions in terms of the spins, where each member of the series is related to a different lenght scale.\\
+
+Even though the interactions between the average spins most probably includes different forms than those between the original spins, they are nevertheless constrained to the forms allowed by the symmetries of the original system. Thus, systems with same symmetry properties, follow a similar pattern during this so called coarse graining proccess.\footnote{Another way to phrase this is they they will "flow" into the same space of energy functions.} They will, therefore, share some universal features, with a specific example being that of the critical exponents, that describe how properties diverge (or go to zero) near the phase transition points. For a more detailed analysis of a critical exponent, that of the vanishing of magnetization approaching the critical temperature from the ordered phase, see Appendix B
+
+\subsection{Ising and Heisenberg Universality Classes}
+
+\hspace{\parindent} Focusing on particular dimensionality and lattice structures, in the Ising model the Hamiltonian of a specific configuration of spins is invariant under flipping every spin of the system ($+1\rightarrow-1$ and vice versa). In the Heisenberg model, the Hamiltonian is invariant to applying the same rotation around the unit sphere to every spin in the system. Therefore the Ising model is symmetrical under global reflections of the spins, which is a discrete symmetry, whilst the Heisenberg model is symmetrical under rotations, which is a continuous symmetry.\\
+
+The Ising model is therefore useful for studying magnetic phase transitions in systems that exhibit it's kind of symmetry, and if we're working in $n$ spacial dimensions, the phase transitions in these systems belong to the $n$-dimensional Ising universality class. Systems with the symmetries of the Heisenberg model respectively belong to the $n$-dimensional Heisenberg universality class.\\
+
+Also worth mentioning is the fact that if the third coordinate of the unit vectors of spins in the Heisenberg model is zero ($\vec{S}_{i}=[S^{x}_{i}, S^{y}_{i}, S^{z}_{i}=0], \forall i\le N$), the so called $XY$ model, the spin becomes a unit vector that can point anywhere on the unit circle and the system lies somewhere in between the Ising and Heisenberg models. It contains a continuous symmetry under global rotations along the unit circle and phase transitions of systems with this kind of symmetry belong to the $n$-dimensional $XY$ universality class.
+\end{document}

@@ -1,0 +1,158 @@
+\documentclass[../rsrg.tex,../../main.tex]{subfiles}
+
+\begin{document}
+\section{RSRG of the AF Heisenberg Model}
+
+As shown already, the isotropic antiferromagnetic Hamiltonian is
+
+\begin{equation}
+    H=J\sum_{i=1}^{N} S_{i}^{x}S_{i+1}^{x}+S_{i}^{y}S_{i+1}^{y}+S_{i}^{z}S_{i+1}^{z}
+\end{equation}
+
+
+If we want to study the more general anisotropic model, for purposes what will become apparent later, it's useful to assume that $J^{x}=J^{y}=1$ and $J^{z}=\gamma,\ 0\le\gamma\le1$, so that the Hamiltonian takes the form
+\begin{equation}
+    H=\sum_{i=1}^{N} S_{i}^{x}S_{i+1}^{x}+S_{i}^{y}S_{i+1}^{y}+\gamma S_{i}^{z}S_{i+1}^{z}
+\end{equation}
+
+We may now group lattice sites into groups of three, labelling the pairs as $(k,a)$ with $k=1,2,...,\sfrac{1}{3}N$ specifying the block and $a=1,2,3$ specifying the sites within each block, thus the $n$th lattice site is labelled as $(k,a)$ where $n=3k-3+a$. Since the lattice sites are in groups of three, the block will have half-integer spin which retains the properties of the original degrees of freedom. The Hamiltonian is then decomposed into two separate pieces, $H_{in}$ and $H_{out}$, where $H_{in}$ is the Hamiltonian of the couples inside a group and $H_{out}$ the Hamiltonian coupling sites in adjacent blocks.
+
+\begin{equation}
+    \begin{split}
+        H_{in}=\sum_{k}&\Big[S^{x}(k,1)S^{x}(k,2)+S^{x}(k,2)S^{x}(k,3)\\
+                +&S^{y}(k,1)S^{y}(k,2)+S^{y}(k,2)S^{y}(k,3)\\
+                +&\gamma(S^{z}(k,1)S^{z}(k,2)+S^{z}(k,2)S^{z}(k,3))\Big]\\
+    H_{out}=\sum_{k}&\Big[S^{x}(k,3)S^{x}(k+1,1)+S^{y}(k,3)S^{y}(k+1,1)\\
+        +&\gamma(S^{z}(k,3)S^{z}(k+1,1)) \Big]
+    \end{split}
+\end{equation}
+
+The next step is to diagonalise $H_{in}$ which can be achieved by considering a single block
+\begin{equation}
+\begin{split}
+    H_{in}&=\sum_{k}H_{block}(k)\\
+    H_{block}&=\vec{S}(1)\vec{S}(2)+\vec{S}(2)\vec{S}(3) + \epsilon (S^{z}(1)S^{z}(2)+S^{z}(2)S^{z}(3))\\
+            &=\frac{1}{2}\left[(\vec{S}(1)+\vec{S}(2)+\vec{S}(3))^{2}-(\vec{S}(1)+\vec{S}(3))^{2}-\frac{3}{2}\right]\\
+            &+\epsilon(S^{z}(1)S^{z}(2)+S^{z}(2)S^{z}(3))
+\end{split}
+\end{equation}
+where $\epsilon=\gamma-1$.\\
+
+For $\epsilon=0$, the isotropic case, $H_{block}$ is rotationally invariant, and the eigenstates can be found by combining $\vec{S}(1)$ and $\vec{S}(3)$ to get a total spin of $0$ or $1$, which is then coupled to $\vec{S}(2)$ giving us a spin-\sfrac{3}{2} multiplet and two spin-\sfrac{1}{2} doublets
+\begin{equation}
+    \begin{split}
+        &\ket{\frac{3}{2},\frac{3}{2}}=\ket{\uparrow\uparrow\uparrow},\ E=+\frac{1}{2}\\
+        &\ket{\frac{3}{2},\frac{1}{2}}=\frac{1}{\sqrt{3}}\left(\ket{\downarrow\uparrow\uparrow}+\ket{\uparrow\downarrow\uparrow}+\ket{\uparrow\uparrow\downarrow}\right),\ E=+\frac{1}{2}\\
+        &\ket{\frac{1}{2},\frac{1}{2}}_{1}=\frac{1}{\sqrt{6}}\left(\ket{\downarrow\uparrow\uparrow}+2\ket{\uparrow\downarrow\uparrow}+\ket{\uparrow\uparrow\downarrow}\right),\ E=-1\\
+        &\ket{\frac{1}{2},\frac{1}{2}}_{0}=\frac{1}{\sqrt{2}}\left(\ket{\uparrow\uparrow\downarrow}-\ket{\downarrow\uparrow\uparrow}\right),\ E=0
+    \end{split}
+\end{equation}
+plus the four corresponding to all the spins flipped with negative total $S$.\\
+
+For $\epsilon\ne0$, $H_{block}$ has the discrete symmetry $z\rightarrow-z$ and is also invariant only under rotations about the $z$-axis. This means that the states of different total spin but equal $S^{z}$ can coexist. The state $\ket{\frac{3}{2},\frac{3}{2}}$ is still an eigenstate, with energy $E=\frac{1}{2}\gamma$, as is the state $\ket{\frac{1}{2},\frac{1}{2}}_{0}$, with energy $E=0$, but the states $\ket{\frac{1}{2},\frac{1}{2}}_{1}$ and $\ket{\frac{3}{2},\frac{1}{2}}$ mix with each other. If we diagonalize the $2\times 2$ matrix, we get the lowest energy eigenstate
+\begin{equation}
+\begin{split}
+        \ket{+\frac{1}{2}}&=\frac{1}{1+2x^{2}}\left( \ket{\frac{1}{2},\frac{1}{2}}_{1}+ \sqrt{2}x\ket{\frac{3}{2},\frac{1}{2}}\right)\\
+        E&=-\frac{1}{4}\left[ \gamma+(\gamma^{2}+8)^{\sfrac{1}{2}}\right]\\
+        x&:=\frac{2(\gamma-1)}{8+\gamma+3(\gamma^{2}+8)}
+\end{split}
+\end{equation}
+
+Since the eigenvalues form a complete set, we could get an equivalent description by specifying the eigenstate of each block. A good argument to help us is that the low-lying states of the lattice are predominantly formed by the low lying eigenstates of $H_{block}$, which allows us to restrict our attention to the sector of states built exclusively from the block states $\ket{+\frac{1}{2}}$ and $\ket{-\frac{1}{2}}$, where $\ket{-\frac{1}{2}}$ is given from $\ket{+\frac{1}{2}}$ under $z\rightarrow-z$.
+\begin{equation}
+\begin{split}
+    \ket{+\frac{1}{2}}&=\frac{1}{\sqrt{1+2x^{2}}}\frac{1}{\sqrt{6}}\Big[(2x-1)\ket{\downarrow\uparrow\uparrow}+(2x+2)\ket{\uparrow\downarrow\uparrow}+(2x-1)\ket{\uparrow\uparrow\downarrow}\Big] \\
+    \ket{-\frac{1}{2}}&=-\frac{1}{\sqrt{1+2x^{2}}}\frac{1}{\sqrt{6}}\Big[(2x-1)\ket{\uparrow\downarrow\downarrow}+(2x+2)\ket{\downarrow\uparrow\downarrow}+(2x-1)\ket{\downarrow\downarrow\uparrow}\Big] 
+\end{split}
+\end{equation}
+
+The next step is to form an effective Hamiltonian, who's matrix elements are the same as the original in this state sector.\\
+
+\subsection{Construction of the Effective Hamiltonian}
+The effective Hamiltonian is constructed by defining new spin operators $\vec{S}'$ such that
+\begin{equation}
+\begin{split}
+    \expval{\vec{S}_{z}'}{\frac{1}{2},+\frac{1}{2}}_{1}=&+\frac{1}{2}\\
+    \expval{\vec{S}_{z}'}{\frac{1}{2},-\frac{1}{2}}_{1}=&-\frac{1}{2}\\
+    \vdots\hspace{50pt}&
+\end{split}
+\end{equation}
+
+Using this definition we can easily calculate that in each block
+\begin{equation}
+\begin{split}
+    \expval{S^{x}(1)}&=\expval{S^{x}(3)}=\frac{2(1+x)(1-2x)}{3(1+2x^{2})}\expval{S^{x}{}'}\\
+    \expval{S^{y}(1)}&=\expval{S^{y}(3)}=\frac{2(1+x)(1-2x)}{3(1+2x^{2})}\expval{S^{y}{}'}\\
+    \expval{S^{z}(1)}&=\expval{S^{z}(3)}=\frac{2(1+x)^{2}}{3(1+2x^{2})}\expval{S^{z}{}'}
+\end{split}
+\end{equation}
+where the $\expval{S^{i}}$ implies any one of the four matrix elements involving the states $\ket{\pm\frac{1}{2}}$ and the equality $\expval{S^{i}(1)}=\expval{S^{i}(3)}$ is due to the even parity of the states. From the above, we can eliminate the $\vec{S}$ operators from $H_{out}$ and since $H_{in}$ has already been diagonalised we can form the effective Hamiltonian
+\begin{equation}
+\begin{split}
+     H^{(1)}=\sum_{i=1}^{\sfrac{N}{3}}a_{1}+\sum_{i=1}^{\sfrac{N}{3}-1}b_{1}\big[&S^{x}{}'(k)S^{x}{}'(k+1)\\+&S^{y}{}'(k)S^{y}{}'(k+1)\\+&\gamma_{1}S^{z}{}'(k)S^{z}{}'(k+1)\big]\\
+\end{split}
+\end{equation}
+where $a_{1},\ b_{1}$ are given by
+\begin{equation}
+    \begin{split}
+        a_{1}&=-\frac{1}{4}[\gamma+\sqrt{\gamma^{2}+8}]\\
+        b_{1}&=\left(\frac{2(1+x)(1-2x)}{3(1+2x^{2})}\right)^{2}\\
+        \gamma_{1}&=\left(\frac{1+x}{1-2x}\right)^{2}\gamma
+    \end{split}
+\end{equation}
+
+Since the form of the effective Hamiltonian is essentially the same as that of the original Hamitlonian, apart from the energy shift $a_{1}$ and the scaling factor $b_{1}$, the blocks can be seen as the sites of a new lattice where we can follow an identical procedure on $H^{(1)}$ to get $H^{(2)}$, etc.\\
+
+In this way we can repeat the procedure $m$ times giving us a sequence of Hamiltonians $H^{(m)}$ increasing the length scale each time and following the recursion relations
+\begin{equation}
+\begin{split}
+H^{(m)}=\sum_{k=1}^{N / 3^{m}} a_{m}+\sum_{k=1}^{\left(N / 3^{m}\right)-1} &b_{m}[S_{x}(k) S_{x}(k+1) \\
+&+S_{y}(k) S_{y}(k+1) \\
+&\left.+\gamma_{m} S_{z}(k) S_{z}(k+1)\right]\\
+\end{split}
+\label{eq:rg}
+\end{equation}
+\begin{equation*}
+\begin{split}
+&a_{m+1}=3 a_{m}-\frac{1}{4} b_{m}\left[\gamma_{m}+\left(\gamma_{m}^{2}+8\right)^{1 / 2}\right] \\
+&b_{m+1}=b_{m}\left(\frac{2\left(1+x_{m}\right)\left(1-2 x_{m}\right)}{3\left(1+2 x_{m}^{2}\right)}\right)^{2} \\
+&\gamma_{m+1}=\gamma_{m}\left(\frac{1+x_{m}}{1-2 x_{m}}\right)^{2} \\
+&a_{0}=0, \quad b_{0}=1, \quad \gamma_{0}=\gamma
+\end{split}
+\end{equation*}
+where
+\begin{equation*}
+x_{m} \equiv 2\left(\gamma_{m}-1\right)\left[8+\gamma_{m}+3\left(\gamma_{m}^{2}+8\right)^{1 / 2}\right]^{-1}
+\end{equation*}
+
+In this context, $a_{m}$ shows the contribution to the energy, which becomes the dominant contribution after sufficiently many iterations of the BRG process. On the finite lattice of length $N$, the number of iterations needed is approximately $m=\log_{3}N$\cite{rabin}, so that after $m$ iterations the whole lattice has been reduced to a single block, meaning that $a_{m}$ is the sole contributor to the energy. Since every iteration reduces the lattice sites by a factor \sfrac{1}{3}, the energy per original lattice site is computed as $\sfrac{a_{m}}{3^{m}}\equiv \mathcal{E}_{m}$. If we let $N\to \infty$, we get the infinite lattice, which yields an energy density given by
+\begin{equation}
+    \mathcal{E}_{m+1}=\mathcal{E}_{m}-\frac{1}{12(3^{m})}b_{m}[\gamma_{m}+(\gamma_{m}^{2}+8)^{\frac{1}{2}}],\text{ where } \mathcal{E}_{0}=0
+\end{equation}
+
+Due to the nature of the RG process, the set of states in each step is smaller than the previous one, meaning that the above equation can always be seen as an upper bound of the true energy density.\\
+\subsection{Fixed Points}
+The recursion relations (\ref{eq:rg}) have three fixed points in the region $\gamma \ge 0$. Here we will only discuss the fixed point $\gamma = 0$, which is the XY model, the other two being $\gamma =1$ and $\gamma \to\infty$\cite{rabin}.\\
+
+Near $\gamma=0$, the RG equations reduce to 
+\begin{equation}
+\begin{aligned}
+&\gamma_{m+1}=\frac{1}{2} \gamma_{m} \\
+&b_{m+1}=\left[\frac{1}{2}+\mathcal{O}\left(\gamma_{m}\right)\right] b_{m} \\
+&\mathcal{E}_{m+1}=\mathcal{E}_{m}-\frac{1}{12\left(3^{m}\right)} b_{m}\left(2 \sqrt{2}+\gamma_{m}\right)
+\end{aligned}
+\label{eq:req}
+\end{equation}
+
+The first recursion relation of (\ref{eq:req}) implies that if $\abs{\gamma}$ is small, the system flows towards the XY form, so that the $\gamma=0$ fixed point is stable . The second relation implies that $\lim_{m\to\infty}b_{m}=0$, so that the XY model is a massless theory. This means that after sufficiently many iterations we can construct states with an arbitrarily small excitation energy.\\
+
+Finally, calculating the energy density $\mathcal{E}_{m}$ at the point $\gamma=0$ using (\ref{eq:req}) gives us
+\begin{equation}
+    \mathcal{E}_{m+1}=\mathcal{E}_{m}-\frac{\sqrt{2}}{6^{m+1}}
+\end{equation}
+which, for $m\to\infty$ gives us a geometric series, whose sum is
+\begin{equation}
+    \mathcal{E}_{\infty}=-\frac{\sqrt{2}}{5}=-0.2828
+\end{equation}
+which, when compared with the exact result\cite{lieb} yields an error of $11\%$.
+\end{document}

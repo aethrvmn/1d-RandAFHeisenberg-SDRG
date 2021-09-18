@@ -1,0 +1,71 @@
+\documentclass[../fstates.tex,../../main.tex]{subfiles}
+
+\begin{document}
+\section{Excited States via the Bethe Ansatz}
+
+The Bethe ansatz is an exact method for the calculations of the eigenvalues and eigenvectors of a select class of quantum many-body systems. It was presented in 1931 by Hans Bethe\cite{bethe} to obtain the exact eigenvalues and eigenvectors of the one-dimensional spin-\sfrac{1}{2} Heisenberg model, which, as we have already seen, is a linear array of electrons with uniform exchange interaction between nearest neighbours. Although nowdays many other quantum many-body systems are known to be solvable by a variant of the Bethe ansatz, we will present the original work, already notoriously complicated, solving the 1D ferromagnetic spin-\sfrac{1}{2} Heisenberg model, with a modern approach.\\
+
+The idea behind the Bethe ansatz is to consider the chosen ground state, which is an eigenstate of the Hamiltonian, with all the spins up and then flipping some spins.\\
+
+We choose the ground state to be
+\begin{equation}
+    \ket{0}=\ket{\uparrow\uparrow\uparrow\ldots\uparrow}
+\end{equation}
+with ground energy
+\begin{equation}
+    H\ket{0}=E_{0}=-\frac{JN}{4}
+\end{equation}
+
+The next step is to flip a spin, which can be done using the spin ladder operators ($S^{\pm}$). A state with $M$ flipped spins is written as
+\begin{equation}
+    \ket{n_{1},\dots, n_{M}}=S_{n_{1}}^{-}\dots S_{M}^{-}\ket{0}
+\end{equation}
+
+So the eigenstate is of the form
+\begin{equation}
+    \ket{\psi}=\sum_{1\le n_{1}\le\dots\le n_{M}\le N} a(n_{1},\dots,n_{M})\ket{n_{1},\dots, n_{M}}
+\end{equation}
+where $a(n_{1},\dots,n_{M})$ represent unknown coefficients. Because of the periodicity of the lattice, $a(n_{1}+N,\dots,n_{M})=a(n_{1},\dots,n_{M})$, the Bethe ansatz proposes that the form of those coefficients is
+\begin{equation}
+    a(n_{1},\dots,n_{M})=\sum_{\sigma\in S_{M}} A_{\sigma}e^{ip_{\sigma_{i}}n_{i}}
+\end{equation}
+which is a plain-wave ansatz. Each such flip\footnote{Up to degeneration.} creates excitations that behave like quasi-particles called magnons, equivalently known and as quantized spin waves in the wave picture of quantum mechanics. 
+
+\section{A Single Magnon}
+Here we will only discuss the case for a single magnon, cases with more magnons are extensivelly discussed in \cite{fazekas, deleeuw,plantz}\\
+
+If we flip a single spin, there are $N$ different states possible. If we call the lattice site with the flipped spin $n$, then the state will be
+\begin{equation}
+    \ket{n}:=S^{-}_{n}\ket{0}=\ket{\ldots\downarrow_{n}\ldots}
+\end{equation}
+and the Hamiltonian acting on it will give us
+\begin{equation}
+    H\ket{n}=-J\left(\frac{1}{2}\ket{n-1}+\frac{1}{2}\ket{n+1}+\ket{n}\right)
+\end{equation}
+
+We can see here that the flipped spin behaves like some sort of quasi-particle, being able to travel around sites or stay put.\\
+
+If we now want to study this new quasi-particle the most natural way to start is to write down the eigenvector of the momentum $p$
+\begin{equation}
+    \ket{p}=\sum_{n}e^{ipn}\ket{n}
+\end{equation}
+which is the discrete version of a plane-wave that we got by taking $a(n)=e^{ipn}$.\\
+
+If we now go back and look at the Hamiltonian action on a flipped spin at some position $n$, we can see that it has a contribution from its neighbouring sites
+\begin{equation}
+    H\ket{p}=\ldots-\frac{J}{2}\left[e^{ip(n+1)}+e^{ip(n-1)}-e^{ipn}\right]\ket{n}\ldots
+\end{equation}
+
+Therefore we see that $\ket{p}$ is an eigenstate of the Hamiltonian, with corresponding energy
+\begin{equation}
+    E=2J\sin^{2}\left(\frac{p}{2}\right)
+\end{equation}
+so the magnon is a quasi-particle with momentum $p$ and energy $E$ moving in the ground state.\\
+
+As we impose periodicity, it acts as a quantization condition on the momentum which can be seen by acting with the Hamiltonian on the $N$th site. Since we get a contribution from $n_{1}$ instead of $n_{N+1}$, we find that this is an eigenstate with eigenvalue E
+\begin{equation}
+    e^{ipN}=1
+\end{equation}
+which is the momentum quantization condition for a particle on a circle of length $N$. 
+
+\end{document}

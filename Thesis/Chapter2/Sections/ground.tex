@@ -1,0 +1,35 @@
+\documentclass[../fstates.tex,../../main.tex]{subfiles}
+
+\begin{document}
+Let us consider the ferromagnetic Heisenberg Hamiltonian with nearest--neighbour interaction
+\begin{equation}
+    H=J\sum_{i}^{N}\vec{S}_{i}\vec{S}_{i+1},\ \text{ where } J<0
+\end{equation}
+
+The total energy of the system is given by the sum of the bond energies $E_{i}$
+\begin{equation}
+\begin{split}
+    E_{i}=J\vec{S}_{i}\vec{S}_{i+1}&=\frac{J}{2}\left[ \left(\vec{S}_{i}+\vec{S}_{i+1}\right)^{2}-\vec{S}_{i}^{2}-\vec{S}_{i+1}^{2} \right]\\
+        &=\abs{J}S(S+1)-\frac{\abs{J}}{2}(\vec{S}_{i}+\vec{S}_{j})^{2}
+\end{split}
+\end{equation}
+which is minimised by taking the two spins parallel $\abs{\vec{S}_{i}+\vec{S}_{i+1}}=2S$ which gives us
+\begin{equation}
+    (E_{i})_{min}=\abs{J}[S(S+1)-S(2S+1)]=-\abs{J}S^{2}
+\end{equation}
+therefore the ground energy of the whole system is
+\begin{equation}
+    E_{tot}=\sum_{i}^{N} (E_{i})_{min}=-\frac{1}{2}N\abs{J}S^{2}
+\end{equation}
+
+The thing to note is that the ground state is not unique. This is because to get the ground state we took all the spins parallel to minimise the bond energy $S_{tot}=NS$. However, since the Hamiltonian is rotationally invariant, turning the total spin into another direction does not change the energy and therefore the ground state must be $(2NS+1)$-fold degenerate.\\
+
+This creates an issue. The partition function is defined as
+\begin{equation}
+    \mathcal{Z}=\sum_{j}e^{-\beta E_{j}}
+\end{equation}
+
+If we try to include all of the ground states in the partition function, statistical averaging would give zero expectation value for the total magnetization of a ferromagnet, since we would average over all possible orientations of the total spin. For a macroscopically large system, we can restrict the Hilbert space by choosing only one ground state and then consider the finite excitations above that ground state.\\
+
+Let us consider two states $\ket{\psi_{1}},\ \ket{\psi_{2}}$. Let $\ket{\psi_{1}}$ be polarised in the z-direction and $\ket{\psi_{2}}$ polarised in an angle $\vartheta$ with the z-axis. If we assume that a finite excitation above $\ket{\psi_{1}}$ is $n<<N$ spins flipped over while $N-n$ spins remain polarised in the z-direction, then the product of this state with $\ket{\psi_{2}}$ approaches 0 as $N\rightarrow\infty$. In the same vein, as $N\rightarrow\infty$, every excitation above $\ket{\psi_{1}}$ is orthogonal to every excitation above $\ket{\psi_{2}}$, meaning that not only are ground states orthogonal in the thermodynamic limit, but the Hilbert spaces that we build from them as well. All states built from $\ket{\psi_{1}}$ have spin density $\expval{S^{z}}_{1}=S$, whilst those of $\ket{\psi_{2}}$ have $\expval{S^{z}}_{2}=S\cos(\vartheta)$. This implies that the excitations above one of those states is distinguishable from the other. It is therefore possible to properly define the partition function so that it includes only the states built from one of the ground states.
+\end{document}
