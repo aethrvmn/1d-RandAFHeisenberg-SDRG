@@ -8,9 +8,9 @@ class Random_chain:
 
     version = "v5"
 
-    def __init__(self, bond_number, ceiling):
+    def __init__(self, bond_number):
         self.length = int(bond_number)
-        self.ceiling = ceiling
+        self.ceiling = 1
         self.matrix_creator()
         self.bonds()
 
@@ -73,9 +73,4 @@ class Random_chain:
     def renormalization(self): # Self-explanatory
         self.decimate()
         self.rescale()
-        return self
-    
-    def parameters(self): # Different physical parameters that can be calculated
-        self.distance = int(np.abs(self.right_index[1]-self.left_index[0]))
-        self.system_energy = -(1/4)*np.sum(self.bond_matrix[self.bond_matrix > 0])
         return self

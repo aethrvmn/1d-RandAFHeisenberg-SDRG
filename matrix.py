@@ -6,7 +6,7 @@ from chain import Random_chain
 from tqdm import tqdm
 
 length = 30
-matrix = Random_chain(length,1)
+matrix = Random_chain(length)
 
 fig = plt.figure()
 
@@ -31,8 +31,8 @@ for i in tqdm(range(int(length/2))):
     img = plt.imshow(matrix.bond_matrix, interpolation='nearest', cmap=cmap, norm=norm, animated=True)
     ims.append([img])
 
+img.figure.savefig('Figures/Matrix/singlet-phase.png', pad_inches=0, transparent=True)
+
 ani = animation.ArtistAnimation(fig, ims, interval=200, blit=True, repeat_delay=10000)
 ani.save('Figures/rg.gif')
-
-img.figure.savefig('Figures/Matrix/singlet-phase.png', pad_inches=0, transparent=True)
 plt.show()
