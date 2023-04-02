@@ -4,50 +4,48 @@ from random_chain import Random_chain
 from scipy.stats import expon
 from tqdm import tqdm
 import seaborn as sns
+import multiprocessing as mp
 
-num_simulations = 20
+num_simulations = 100
+num_cores = mp.cpu_count() // 2  # Use half of the available cores
 
-bond_distributions = []
-
-length = 1000
-n_steps = int(length / 2)
-
-for sim in tqdm(range(num_simulations)):
+def run_simulation(sim):
+    length = 1000
+    n_steps = int(length / 2)
     chain = Random_chain(length, resc = False)
 
-    for _ in range(n_steps):
+    for _ in tqdm(range(n_steps)):
         chain.renormalization()
 
-    # Calculate the final bond distribution
     final_bond_distribution = np.extract(chain.bond_matrix != 0, chain.bond_matrix)
-
-    # Separate positive and negative bonds
     negative_bonds = [x for x in final_bond_distribution if x < 0]
+    abs_negative_bonds = negative_bonds- min(negative_bonds)
 
-    # Get the absolute values of the negative bonds
-    abs_negative_bonds = negative_bonds - min(negative_bonds)
+    return abs_negative_bonds
 
-    # Calculate the scale parameter for the exponential distribution
-    bond_distributions.append(abs_negative_bonds)
+if __name__ == '__main__':
+    with mp.Pool(num_cores) as pool:
+        bond_distributions = list(tqdm(pool.imap(run_simulation, range(num_simulations)), total=num_simulations))
 
-# Combine the bond distributions from each run and calculate the average distribution
-average_distribution = np.concatenate(bond_distributions)
+    average_distribution = np.concatenate(bond_distributions)
+    scale = np.mean(average_distribution)
+    x = np.linspace(0, max(average_distribution), num=200)
 
-# Calculate the scale parameter for the exponential distribution
-scale = np.mean(average_distribution)
+    plt.figure(1)
+    plt.hist(average_distribution, label="Average absolute values of negative bonds", density = True, bins = 'auto')
+    plt.plot(x, expon.pdf(x, scale=scale), label="Exponential distribution", linestyle="--")
+    plt.xlabel("Bond strength")
+    plt.ylabel("Density")
+    plt.legend()
+    plt.title("Average bond distribution")
+    plt.savefig("Figures/average_bond_distribution_histogram.png")
 
-# Generate x values for the exponential distribution
-x = np.linspace(0, max(average_distribution), num=200)
-
-# Plot the histogram for the average distribution
-plt.hist(average_distribution, bins='auto', density=True, alpha=0.7, label="Average absolute values of negative bonds")
-
-# Plot the exponential distribution
-plt.plot(x, expon.pdf(x, scale=scale), label="Exponential distribution", linestyle="--")
-plt.xlabel("Bond strength")
-plt.ylabel("Density")
-plt.legend()
-plt.title("Average bond distribution")
-plt.savefig("Figures/average_bond_distribution_histogram.png")
-plt.show()
-
+    plt.figure(2)
+    sns.kdeplot(average_distribution, label="Average absolute values of negative bonds", fill = True)
+    plt.plot(x, expon.pdf(x, scale=scale), label="Exponential distribution", linestyle="--")
+    plt.xlabel("Bond strength")
+    plt.ylabel("Density")
+    plt.legend()
+    plt.title("Average bond distribution")
+    plt.savefig("Figures/average_bond_distribution_kdeplot.png")
+    plt.show()

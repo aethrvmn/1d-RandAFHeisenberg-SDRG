@@ -1,6 +1,6 @@
 import numpy as np
 
-np.random.seed(20) # Comment if you want randomised results, it was used to get the graphs for the thesis text.
+# np.random.seed(20) # Comment if you want randomised results, it was used to get the graphs for the thesis text.
 
 
 class Random_chain:
@@ -44,13 +44,6 @@ class Random_chain:
             self.right_bond = self.bond_matrix[tuple(self.right_index)]
 
             self.eff_bond = self.right_bond * self.left_bond / self.max_bond
-
-            if self.eff_bond == 0:
-                self.zeta = 0
-            else:
-                self.zeta = np.log(self.max_bond / self.eff_bond)
-            self.gamma = -np.log(self.max_bond)
-            self.eta = self.zeta / self.gamma
         return self
 
 
